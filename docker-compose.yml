@@ -15,8 +15,6 @@ services:
   pgsql:
     image: 'postgres:13-alpine'
     container_name: bookworm_postgres
-    ports:
-      - '5432:5432'
     environment:
       PGPASSWORD: '${DB_PASSWORD}'
       POSTGRES_DB: '${DB_DATABASE}'
@@ -30,10 +28,17 @@ services:
   app:
     build: .
     container_name: bookworm_app
+    user: '${UID:-1000}:${GID:-1000}'
     volumes: 
       - './:/app'
     depends_on: 
       - pgsql
+  
+  adminer:
+    image: dockette/adminer:pgsql
+    container_name: bookworm_adminer
+    ports: 
+      - '81:80'
 
 volumes:
     bookworm_pgsql:
