@@ -11,4 +11,18 @@ class Book extends Model
     use HasFactory, SoftDeletes;
 
     public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'category_id',
+        'author_id',
+        'book_title',
+        'book_summary',
+        'book_price',
+        'book_cover_photo',
+    ];
 }
