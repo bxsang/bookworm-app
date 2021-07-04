@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Review;
+use App\Models\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
@@ -19,6 +20,7 @@ class BookSeeder extends Seeder
      */
     public function run()
     {
+        $users = User::factory()->count(5)->create();
         $categories = Category::factory()->count(5)->create();
         $authors = Author::factory()->count(10)->create();
         $faker = Factory::create();
@@ -46,7 +48,8 @@ class BookSeeder extends Seeder
                     if ($faker->boolean(40)) {
                         Review::factory()->count($faker->numberBetween(1, 10))
                             ->create([
-                                'book_id' => $book->id
+                                'book_id' => $book->id,
+                                'user_id' => $users->random()->id
                             ]);
                     }
                 }
