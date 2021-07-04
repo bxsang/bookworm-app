@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
+use App\Http\Resources\BookResource;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        return Book::all();
+        return BookResource::collection(Book::paginate(10));
     }
 
     /**
@@ -30,7 +31,7 @@ class BookController extends Controller
         $validated_request = $request->validated();
         $book = Book::create($validated_request);
 
-        return response($book, 201);
+        return response(new BookResource($book), 201);
     }
 
     /**
@@ -41,7 +42,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        return $book;
+        return new BookResource($book);
     }
 
     /**
@@ -55,7 +56,7 @@ class BookController extends Controller
     {
         $book->update($request->all());
 
-        return $book;
+        return new BookResource($book);
     }
 
     /**

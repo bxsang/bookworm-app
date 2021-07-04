@@ -11,4 +11,9 @@ class Author extends Model
     use HasFactory, SoftDeletes;
 
     public $timestamps = false;
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }
