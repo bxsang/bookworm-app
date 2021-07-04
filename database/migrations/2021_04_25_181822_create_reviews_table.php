@@ -21,6 +21,7 @@ class CreateReviewsTable extends Migration
             $table->text('review_details')->nullable();
             $table->timestamp('review_date');
             $table->enum('rating_start', [1, 2, 3, 4, 5]);
+            $table->softDeletes();
         });
     }
 

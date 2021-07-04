@@ -17,6 +17,7 @@ class CreateAuthorsTable extends Migration
             $table->id();
             $table->tinyText('author_name');
             $table->text('author_bio')->nullable();
+            $table->softDeletes();
         });
     }
 
