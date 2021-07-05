@@ -76,7 +76,6 @@ class BookController extends Controller
     public function getMostDiscountItems()
     {
         $discounts = Discount::whereDate('discount_start_date', '<=', now())
-                                ->whereDate('discount_start_date', '<=', now())
                                 ->where(function ($query) {
                                     $query->whereDate('discount_end_date', '>=', now())
                                             ->orWhere('discount_end_date', null);
