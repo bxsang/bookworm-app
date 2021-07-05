@@ -71,4 +71,19 @@ class BookController extends Controller
 
         return response(['success' => true]);
     }
+
+    public function getMostDiscountItems()
+    {
+        $discounts = Book::join('discounts', 'books.id', '=', 'discounts.book_id')
+                                ->whereDate('discounts.discount_start_date', '<=', now())
+                                ->where(function ($query) {
+                                    $query->whereDate('discounts.discount_end_date', '>=', now())
+                                            ->orWhere('discounts.discount_end_date', null);
+                                })
+                                ->orderBy('discounts.discount_price', 'DESC')
+                                ->take(10)
+                                ->get();
+
+        return $discounts;
+    }
 }

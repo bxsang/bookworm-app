@@ -35,4 +35,20 @@ class Book extends Model
     {
         return $this->belongsTo(Author::class);
     }
+
+    public function discount()
+    {
+        return $this->hasMany(Discount::class)
+                        ->latest('discount_start_date')
+                        ->whereDate('discount_start_date', '<=', now())
+                        ->where(function ($query) {
+                            $query->whereDate('discount_end_date', '>=', now())
+                                    ->orWhere('discount_end_date', null);
+                        });
+    }
+
+    public function discounts()
+    {
+        return $this->hasMany(Discount::class);
+    }
 }
