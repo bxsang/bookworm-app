@@ -7,6 +7,7 @@ use App\Http\Requests\BookRequest;
 use App\Http\Resources\BookResource;
 use App\Models\Book;
 use App\Models\Discount;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -73,20 +74,15 @@ class BookController extends Controller
         return response(['success' => true]);
     }
 
-    public function getMostDiscountItems()
+    public function getMostDiscount()
     {
-        $discounts = Discount::whereDate('discount_start_date', '<=', now())
-                                ->where(function ($query) {
-                                    $query->whereDate('discount_end_date', '>=', now())
-                                            ->orWhere('discount_end_date', null);
-                                })
-                                ->orderBy('discount_price', 'DESC')
-                                ->take(10)
-                                ->get();
+        $discounts = Discount::mostDiscount()->get();
+
         $books = [];
         foreach ($discounts as $key => $value) {
             array_push($books, $value->book);
         }
+
         return BookResource::collection($books);
     }
 }

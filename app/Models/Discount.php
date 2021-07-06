@@ -16,4 +16,15 @@ class Discount extends Model
     {
         return $this->belongsTo(Book::class);
     }
+
+    public function scopeMostDiscount($query)
+    {
+        return $query->whereDate('discount_start_date', '<=', now())
+                        ->where(function ($query) {
+                            $query->whereDate('discount_end_date', '>=', now())
+                                    ->orWhere('discount_end_date', null);
+                        })
+                        ->orderBy('discount_price', 'DESC')
+                        ->take(10);
+    }
 }
