@@ -14,7 +14,7 @@ class BookResource extends JsonResource
      */
     public function toArray($request)
     {
-        $final_price = null;
+        $final_price = $this->book_price;
         if ($this->discount->isNotEmpty()) {
             $final_price = $this->book_price - $this->discount[0]->discount_price;
         }
