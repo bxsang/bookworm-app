@@ -23,3 +23,5 @@ Route::post('login', [AuthController::class, 'login']);
 Route::apiResource('users', UserController::class)->middleware('auth:api');
 Route::apiResource('books', BookController::class)->middleware('auth:api');
 Route::get('most-discount-books', [BookController::class, 'getMostDiscount'])->middleware('auth:api');
+Route::get('recommended-books', [BookController::class, 'getRecommended'])->middleware('auth:api');
+Route::get('popular-books', [BookController::class, 'getPopular'])->middleware('auth:api');

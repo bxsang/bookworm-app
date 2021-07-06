@@ -85,4 +85,28 @@ class BookController extends Controller
 
         return BookResource::collection($books);
     }
+
+    public function getRecommended()
+    {
+        $reviews = Review::mostStar()->get();
+
+        $books = [];
+        foreach ($reviews as $key => $value) {
+            array_push($books, $value->book);
+        }
+
+        return BookResource::collection($books)->sortBy('book_price');
+    }
+
+    public function getPopular()
+    {
+        $reviews = Review::mostReview()->get();
+
+        $books = [];
+        foreach ($reviews as $key => $value) {
+            array_push($books, $value->book);
+        }
+
+        return BookResource::collection($books)->sortBy('book_price');
+    }
 }
