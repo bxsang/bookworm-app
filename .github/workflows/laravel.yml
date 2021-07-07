@@ -49,3 +49,17 @@ jobs:
       run: npm install
     - name: Compile assets for production
       run: npm run production
+
+  docker-compose-test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the stack
+        run: docker-compose up -d --build
+      - name: Test
+        run: docker run --network container:bookworm_nginx appropriate/curl -s --retry 10 --retry-connrefused http://localhost/
+      - name: Stop containers
+        if: always()
+        run: docker-compose down
