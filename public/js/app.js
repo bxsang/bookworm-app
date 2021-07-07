@@ -17,7 +17,7 @@ __webpack_require__.r(__webpack_exports__);
 
 react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h1", {
   children: "Hello, world!"
-}), document.getElementById('root'));
+}), document.getElementById('app'));
 
 /***/ }),
 

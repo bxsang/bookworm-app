@@ -3,12 +3,12 @@ services:
   nginx:
     image: 'nginx:stable-alpine'
     container_name: bookworm_nginx
-    ports: 
+    ports:
       - '80:80'
-    volumes: 
+    volumes:
       - './:/app'
       - './nginx.conf:/etc/nginx/conf.d/default.conf'
-    depends_on: 
+    depends_on:
       - app
       - pgsql
 
@@ -24,20 +24,20 @@ services:
       - 'bookworm_pgsql:/var/lib/postgresql/data'
     healthcheck:
       test: [ "CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}" ]
-  
+
   app:
     build: .
     container_name: bookworm_app
     user: '${UID:-1000}:${GID:-1000}'
-    volumes: 
+    volumes:
       - './:/app'
-    depends_on: 
+    depends_on:
       - pgsql
-  
+
   adminer:
     image: dockette/adminer:pgsql
     container_name: bookworm_adminer
-    ports: 
+    ports:
       - '81:80'
 
 volumes:
