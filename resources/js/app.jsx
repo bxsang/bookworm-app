@@ -1,7 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import NavBar from './components/NavBar'
 
-ReactDOM.render(
-  <h1>Hello, world!</h1>,
-  document.getElementById('app')
-);
+class App extends Component {
+  render() {
+    return (
+      <NavBar />
+    )
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById('app'))
