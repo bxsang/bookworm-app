@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import NavBar from './components/NavBar'
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './Routes';
+import NavBar from './components/NavBar';
 
-class App extends Component {
-  render() {
-    return (
-      <NavBar />
-    )
-  }
-}
+const App = () => (
+  <BrowserRouter>
+    <NavBar />
+    <Routes />
+  </BrowserRouter>
+)
 
 ReactDOM.render(<App />, document.getElementById('app'))
