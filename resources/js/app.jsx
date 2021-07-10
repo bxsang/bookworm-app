@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './Routes';
+import NavBar from './components/NavBar';
 
-ReactDOM.render(
-  <h1>Hello, world!</h1>,
-  document.getElementById('app')
-);
+const App = () => (
+  <BrowserRouter>
+    <NavBar />
+    <Routes />
+  </BrowserRouter>
+)
+
+ReactDOM.render(<App />, document.getElementById('app'))
