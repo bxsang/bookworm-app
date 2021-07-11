@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Http\Resources\BookResource;
+use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\Discount;
 use App\Models\Review;
 use Illuminate\Http\Request;
@@ -108,5 +110,26 @@ class BookController extends Controller
         }
 
         return BookResource::collection($books)->sortBy('book_price');
+    }
+
+    public function getByCategory($category_id)
+    {
+        $category = Category::find($category_id);
+
+        return BookResource::collection($category->books);
+    }
+
+    public function getByAuthor($author_id)
+    {
+        $author = Author::find($author_id);
+
+        return BookResource::collection($author->books);
+    }
+
+    public function getReviews($book_id)
+    {
+        $book = Book::find($book_id);
+
+        return $book->reviews;
     }
 }
