@@ -5,6 +5,8 @@ import Home from './components/Home'
 import Shop from './components/Shop'
 import About from './components/About'
 import Cart from './components/Cart'
+import Login from './components/Login'
+import Profile from './components/Profile'
 
 const Routes = () => (
   <Switch>
@@ -19,6 +21,12 @@ const Routes = () => (
     </Route>
     <Route exact path='/cart'>
       <Cart />
+    </Route>
+    <Route exact path='/login'>
+      <Login />
+    </Route>
+    <Route exact path='/profile'>
+      <Profile />
     </Route>
   </Switch>
 )
