@@ -20,12 +20,12 @@ use App\Http\Controllers\API\UserController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('books/most-discount', [BookController::class, 'getMostDiscount'])->middleware('auth:api');
-Route::get('books/recommended', [BookController::class, 'getRecommended'])->middleware('auth:api');
-Route::get('books/popular', [BookController::class, 'getPopular'])->middleware('auth:api');
-Route::get('books/by/category/{category_id}', [BookController::class, 'getByCategory'])->middleware('auth:api');
-Route::get('books/by/author/{author_id}', [BookController::class, 'getByAuthor'])->middleware('auth:api');
-Route::get('books/{book_id}/reviews', [BookController::class, 'getReviews'])->middleware('auth:api');
+Route::get('books/most-discount', [BookController::class, 'getMostDiscount']);
+Route::get('books/recommended', [BookController::class, 'getRecommended']);
+Route::get('books/popular', [BookController::class, 'getPopular']);
+Route::get('books/by/category/{category_id}', [BookController::class, 'getByCategory']);
+Route::get('books/by/author/{author_id}', [BookController::class, 'getByAuthor']);
+Route::get('books/{book_id}/reviews', [BookController::class, 'getReviews']);
 
-Route::apiResource('users', UserController::class)->middleware('auth:api');
-Route::apiResource('books', BookController::class)->middleware('auth:api');
+Route::apiResource('users', UserController::class);
+Route::apiResource('books', BookController::class);
