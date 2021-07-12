@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-// import { connect } from "react-redux";
 import { Provider } from "react-redux";
 import { BrowserRouter } from 'react-router-dom';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Routes from './Routes';
 import NavBar from './components/NavBar';
 import store from "./store";
