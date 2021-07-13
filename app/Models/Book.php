@@ -61,7 +61,7 @@ class Book extends Model
     public function scopeSelectFinalPrice($query)
     {
         return $query->addSelect([
-            'final_price' => Discount::select(DB::raw('coalesce(discounts.discount_price, books.book_price)'))
+            'final_price' => Discount::select(DB::raw('coalesce(max(discounts.discount_price), books.book_price)'))
                                         ->whereColumn('book_id', 'books.id')
                                         ->whereDate('discount_start_date', '<=', now())
                                         ->where(function ($query) {
