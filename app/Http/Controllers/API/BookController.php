@@ -76,7 +76,7 @@ class BookController extends Controller
         return response(['success' => true]);
     }
 
-    public function getMostDiscount()
+    public function getOnSale()
     {
         $discounts = Discount::mostDiscount()->get();
 
