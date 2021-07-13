@@ -10,6 +10,21 @@ class OrderItem extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id',
+        'order_id',
+        'book_id',
+        'quantity',
+        'price'
+    ];
+
     public function order()
     {
         return $this->belongsTo(Order::class);

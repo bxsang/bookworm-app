@@ -10,6 +10,18 @@ class Order extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'order_date',
+        'order_amount'
+    ];
+
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);

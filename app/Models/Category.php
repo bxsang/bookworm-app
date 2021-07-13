@@ -14,6 +14,16 @@ class Category extends Model
 
     protected $table = 'categories';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'category_name',
+        'category_desc'
+    ];
+
     public function books()
     {
         return $this->hasMany(Book::class);
