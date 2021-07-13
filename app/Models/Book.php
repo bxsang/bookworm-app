@@ -84,7 +84,23 @@ class Book extends Model
         ]);
     }
 
-    public function scopeSortByOnSale($query)
+    public function scopeSelectAvgStar($query)
+    {
+        return $query->addSelect([
+            'avg_star' => Review::select(DB::raw('avg(rating_start::int)'))
+                                    ->whereColumn('book_id', 'books.id')
+        ]);
+    }
+
+    public function scopeSelectReviewsCount($query)
+    {
+        return $query->addSelect([
+            'reviews_count' => Review::select(DB::raw('count(book_id)'))
+                                    ->whereColumn('book_id', 'books.id')
+        ]);
+    }
+
+    public function scopeOnSale($query)
     {
         return $query->whereHas('availableDiscounts')
                         ->selectFinalPrice()
@@ -92,5 +108,25 @@ class Book extends Model
                         ->orderByDesc('sub_price')
                         ->orderBy('final_price')
                         ->take(10);
+    }
+
+    public function scopeRecommended($query)
+    {
+        return $query->whereHas('reviews')
+                        ->selectFinalPrice()
+                        ->selectAvgStar()
+                        ->orderByDesc('avg_star')
+                        ->orderBy('final_price')
+                        ->take(8);
+    }
+
+    public function scopePopular($query)
+    {
+        return $query->whereHas('reviews')
+                        ->selectFinalPrice()
+                        ->selectReviewsCount()
+                        ->orderByDesc('reviews_count')
+                        ->orderBy('final_price')
+                        ->take(8);
     }
 }

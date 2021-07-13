@@ -23,8 +23,11 @@ class BookResource extends JsonResource
             'category' => $this->category,
             'author' => $this->author,
             'discounts' => $this->availableDiscounts,
+            'reviews' => $this->reviews,
             'sub_price' => $this->sub_price,
-            'final_price' => $this->final_price
+            'final_price' => $this->final_price,
+            'avg_star' => $this->avg_star,
+            'reviews_count' => $this->reviews_count
         ];
     }
 }
