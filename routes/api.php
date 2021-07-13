@@ -3,7 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\DiscountController;
+use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 
 /*
@@ -29,3 +33,7 @@ Route::get('books/{book_id}/reviews', [BookController::class, 'getReviews']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('books', BookController::class);
+Route::apiResource('authors', AuthorController::class);
+Route::apiResource('categories', CategoryController::class);
+Route::apiResource('discounts', DiscountController::class);
+Route::apiResource('reviews', ReviewController::class);

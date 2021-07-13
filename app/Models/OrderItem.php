@@ -6,13 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class OrderItem extends Model
 {
     use HasFactory, SoftDeletes;
 
     public $timestamps = false;
-
-    protected $table = 'categories';
 
     /**
      * The attributes that are mass assignable.
@@ -20,12 +18,15 @@ class Category extends Model
      * @var array
      */
     protected $fillable = [
-        'category_name',
-        'category_desc'
+        'user_id',
+        'order_id',
+        'book_id',
+        'quantity',
+        'price'
     ];
 
-    public function books()
+    public function order()
     {
-        return $this->hasMany(Book::class);
+        return $this->belongsTo(Order::class);
     }
 }
