@@ -58,6 +58,11 @@ class Book extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function orderItem()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
+
     public function scopeSelectFinalPrice($query)
     {
         return $query->addSelect([
