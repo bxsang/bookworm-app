@@ -20,7 +20,7 @@ use App\Http\Controllers\API\UserController;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
-Route::get('books/most-discount', [BookController::class, 'getMostDiscount']);
+Route::get('books/on-sale', [BookController::class, 'getOnSale']);
 Route::get('books/recommended', [BookController::class, 'getRecommended']);
 Route::get('books/popular', [BookController::class, 'getPopular']);
 Route::get('books/by/category/{category_id}', [BookController::class, 'getByCategory']);

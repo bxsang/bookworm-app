@@ -76,40 +76,22 @@ class BookController extends Controller
         return response(['success' => true]);
     }
 
-    public function getMostDiscount()
+    public function getOnSale()
     {
-        $discounts = Discount::mostDiscount()->get();
-
-        $books = [];
-        foreach ($discounts as $key => $value) {
-            array_push($books, $value->book);
-        }
-
+        $books = Book::onSale()->get();
         return BookResource::collection($books);
     }
 
     public function getRecommended()
     {
-        $reviews = Review::mostStar()->get();
-
-        $books = [];
-        foreach ($reviews as $key => $value) {
-            array_push($books, $value->book);
-        }
-
-        return BookResource::collection($books)->sortBy('book_price');
+        $books = Book::recommended()->get();
+        return BookResource::collection($books);
     }
 
     public function getPopular()
     {
-        $reviews = Review::mostReview()->get();
-
-        $books = [];
-        foreach ($reviews as $key => $value) {
-            array_push($books, $value->book);
-        }
-
-        return BookResource::collection($books)->sortBy('book_price');
+        $books = Book::popular()->get();
+        return BookResource::collection($books);
     }
 
     public function getByCategory($category_id)

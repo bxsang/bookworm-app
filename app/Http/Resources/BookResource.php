@@ -14,21 +14,20 @@ class BookResource extends JsonResource
      */
     public function toArray($request)
     {
-        $final_price = $this->book_price;
-        if ($this->discount->isNotEmpty()) {
-            $final_price = $this->book_price - $this->discount[0]->discount_price;
-        }
-
         return [
             'id' => $this->id,
             'book_title' => $this->book_title,
             'book_summary' => $this->book_summary,
             'book_price' => $this->book_price,
             'book_cover_photo' => $this->book_cover_photo,
-            'category' => $this->category,
+            // 'category' => $this->category,
             'author' => $this->author,
-            'discount' => $this->discount,
-            'final_price' => $final_price,
+            // 'discounts' => $this->availableDiscounts,
+            // 'reviews' => $this->reviews,
+            // 'sub_price' => $this->sub_price,
+            'final_price' => $this->final_price,
+            // 'avg_star' => $this->avg_star,
+            // 'reviews_count' => $this->reviews_count
         ];
     }
 }
