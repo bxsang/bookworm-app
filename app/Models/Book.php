@@ -90,6 +90,7 @@ class Book extends Model
                         ->selectFinalPrice()
                         ->selectSubPrice()
                         ->orderByDesc('sub_price')
+                        ->orderBy('final_price')
                         ->take(10);
     }
 }
