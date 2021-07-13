@@ -78,13 +78,7 @@ class BookController extends Controller
 
     public function getOnSale()
     {
-        $discounts = Discount::mostDiscount()->get();
-
-        $books = [];
-        foreach ($discounts as $key => $value) {
-            array_push($books, $value->book);
-        }
-
+        $books = Book::sortByOnSale()->get();
         return BookResource::collection($books);
     }
 
