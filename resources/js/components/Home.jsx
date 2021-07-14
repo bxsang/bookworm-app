@@ -58,22 +58,21 @@ class Home extends Component {
   render() {
     return (
       <Container>
-            <div class="section">
-              <h3>On Sale</h3>
-              <Button variant="primary">View all</Button>{' '}
-            </div>
-            <div id="productCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-              <div class="carousel-inner">
-                {this.mapBooksSlide()}
-              </div>
-
-              <a class="carousel-control-prev" href="#productCarousel" data-slide="prev">
-                <FontAwesomeIcon icon={faAngleLeft} />
-              </a>
-              <a class="carousel-control-next" href="#productCarousel" data-slide="next">
-                <FontAwesomeIcon icon={faAngleRight} />
-              </a>
-            </div>
+        <div class="section">
+          <h3>On Sale</h3>
+          <Button variant="primary">View all</Button>{' '}
+        </div>
+        <div id="productCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+          <div class="carousel-inner">
+            {this.mapBooksSlide()}
+          </div>
+          <a class="carousel-control-prev" href="#productCarousel" data-slide="prev">
+            <FontAwesomeIcon icon={faAngleLeft} />
+          </a>
+          <a class="carousel-control-next" href="#productCarousel" data-slide="next">
+            <FontAwesomeIcon icon={faAngleRight} />
+          </a>
+        </div>
       </Container>
     )
   }
