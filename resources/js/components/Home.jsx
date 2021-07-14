@@ -4,6 +4,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { chunk } from 'lodash'
 
+import BookCard from './BookCard'
 import BooksService from '../services/books'
 
 class Home extends Component {
@@ -58,21 +59,7 @@ class Home extends Component {
       return (
         <div class={`carousel-item ${index==0 ? "active" : ""}`} key={index}>
           <div class="row">
-            {chunks.map((book, index) => {
-              return (
-                <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
-                  <div class="thumb-wrapper">
-                    <div class="img-box">
-                      <img src={`http://localhost/assets/bookcover/${book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
-                    </div>
-                    <div class="thumb-content">
-                      <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
-                      <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
+            <BookCard books={chunks} />
           </div>
         </div>
       )
@@ -84,21 +71,8 @@ class Home extends Component {
       return <div>Loading...</div>;
     }
     let books = this.state.recommendedBooks
-      return books.map((book, index) => {
-        return (
-          <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
-            <div class="thumb-wrapper">
-              <div class="img-box">
-                <img src={`http://localhost/assets/bookcover/${book.book_cover_photo!==null && book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
-              </div>
-              <div class="thumb-content">
-                <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
-                <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
-              </div>
-            </div>
-          </div>
-        )
-      })
+
+    return <BookCard books={books} />
   }
 
   mapPopularBooks() {
@@ -106,21 +80,8 @@ class Home extends Component {
       return <div>Loading...</div>;
     }
     let books = this.state.popularBooks
-      return books.map((book, index) => {
-        return (
-          <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
-            <div class="thumb-wrapper">
-              <div class="img-box">
-                <img src={`http://localhost/assets/bookcover/${book.book_cover_photo!==null && book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
-              </div>
-              <div class="thumb-content">
-                <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
-                <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
-              </div>
-            </div>
-          </div>
-        )
-      })
+
+    return <BookCard books={books} />
   }
 
   render() {
