@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Container, Row, Button, Card } from 'react-bootstrap'
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { chunk } from 'lodash'
+import { chunk, _ } from 'lodash'
 
 import BooksService from '../services/books'
 
@@ -39,7 +39,7 @@ class Home extends Component {
                 <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
                   <div class="thumb-wrapper">
                     <div class="img-box">
-                      <img src={`http://localhost/assets/bookcover/${book.book_cover_photo.match(/\d+$/)[0] ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
+                      <img src={`http://localhost/assets/bookcover/${book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
                     </div>
                     <div class="thumb-content">
                       <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
