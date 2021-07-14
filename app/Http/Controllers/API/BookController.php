@@ -136,6 +136,7 @@ class BookController extends Controller
         $authors = explode(',', $request->authors);
         $rating_stars = explode(',', $request->rating_stars);
         $sort_by = $request->sort_by;
+        $per_page = $request->per_page;
 
         $books = $this->filter($categories, $authors, $rating_stars);
 
@@ -161,6 +162,6 @@ class BookController extends Controller
                 break;
         }
 
-        return $books->get();
+        return BookResource::collection($books->paginate((int)$per_page));
     }
 }
