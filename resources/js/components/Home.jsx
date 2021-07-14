@@ -58,8 +58,6 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <Row>
-          <div class="col-md-12">
             <div class="section">
               <h3>On Sale</h3>
               <Button variant="primary">View all</Button>{' '}
@@ -76,8 +74,6 @@ class Home extends Component {
                 <FontAwesomeIcon icon={faAngleRight} />
               </a>
             </div>
-          </div>
-        </Row>
       </Container>
     )
   }
