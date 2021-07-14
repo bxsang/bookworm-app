@@ -1,5 +1,4 @@
 import React from 'react'
-import books from '../services/books'
 
 const BookCards = (props) => {
   return props.books.map((book, index) => {
