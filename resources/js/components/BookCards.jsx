@@ -1,6 +1,7 @@
 import React from 'react'
+import books from '../services/books'
 
-const BookCard = (props) => {
+const BookCards = (props) => {
   return props.books.map((book, index) => {
     return (
       <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
@@ -10,7 +11,12 @@ const BookCard = (props) => {
           </div>
           <div class="thumb-content">
             <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
-            <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
+            <p class="item-price">
+              {book.book_price !== book.final_price ? (
+                <strike>{`$${book.book_price}`}</strike>
+              ): null}
+              <span><strong>{`$${book.final_price}`}</strong></span>
+            </p>
           </div>
         </div>
       </div>
@@ -18,4 +24,4 @@ const BookCard = (props) => {
   })
 }
 
-export default BookCard
+export default BookCards

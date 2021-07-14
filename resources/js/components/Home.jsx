@@ -4,7 +4,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { chunk } from 'lodash'
 
-import BookCard from './BookCard'
+import BookCards from './BookCards'
 import BooksService from '../services/books'
 
 class Home extends Component {
@@ -59,7 +59,7 @@ class Home extends Component {
       return (
         <div class={`carousel-item ${index==0 ? "active" : ""}`} key={index}>
           <div class="row">
-            <BookCard books={chunks} />
+            <BookCards books={chunks} />
           </div>
         </div>
       )
@@ -72,7 +72,7 @@ class Home extends Component {
     }
     let books = this.state.recommendedBooks
 
-    return <BookCard books={books} />
+    return <BookCards books={books} />
   }
 
   mapPopularBooks() {
@@ -81,7 +81,7 @@ class Home extends Component {
     }
     let books = this.state.popularBooks
 
-    return <BookCard books={books} />
+    return <BookCards books={books} />
   }
 
   render() {
