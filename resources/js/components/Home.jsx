@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { Container, Row, Button, Card } from 'react-bootstrap'
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { chunk, _ } from 'lodash'
+import { chunk } from 'lodash'
 
 import BooksService from '../services/books'
 
@@ -10,26 +10,50 @@ class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      onSaleBook: undefined
+      onSaleBooks: undefined,
+      recommendedBooks: undefined,
+      popularBooks: undefined
     }
   }
 
   componentDidMount() {
     this.getOnSaleBooks()
+    this.getRecommendedBooks()
+    this.getPopularBooks()
   }
 
   getOnSaleBooks() {
     BooksService.getOnSaleBooks().then(
       (response) => {
         this.setState({
-          onSaleBook: response
+          onSaleBooks: response
+        })
+      }
+    )
+  }
+
+  getRecommendedBooks() {
+    BooksService.getRecommendedBooks().then(
+      (response) => {
+        this.setState({
+          recommendedBooks: response
+        })
+      }
+    )
+  }
+
+  getPopularBooks() {
+    BooksService.getPopularBooks().then(
+      (response) => {
+        this.setState({
+          popularBooks: response
         })
       }
     )
   }
 
   mapBooksSlide() {
-    let books = chunk(this.state.onSaleBook, 4)
+    let books = chunk(this.state.onSaleBooks, 4)
     return books.map((chunks, index) => {
       return (
         <div class={`carousel-item ${index==0 ? "active" : ""}`} key={index}>
@@ -55,6 +79,50 @@ class Home extends Component {
     })
   }
 
+  mapRecommendedBooks() {
+    if (typeof(this.state.recommendedBooks) === 'undefined') {
+      return <div>Loading...</div>;
+    }
+    let books = this.state.recommendedBooks
+      return books.map((book, index) => {
+        return (
+          <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
+            <div class="thumb-wrapper">
+              <div class="img-box">
+                <img src={`http://localhost/assets/bookcover/${book.book_cover_photo!==null && book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
+              </div>
+              <div class="thumb-content">
+                <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
+                <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
+              </div>
+            </div>
+          </div>
+        )
+      })
+  }
+
+  mapPopularBooks() {
+    if (typeof(this.state.popularBooks) === 'undefined') {
+      return <div>Loading...</div>;
+    }
+    let books = this.state.popularBooks
+      return books.map((book, index) => {
+        return (
+          <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
+            <div class="thumb-wrapper">
+              <div class="img-box">
+                <img src={`http://localhost/assets/bookcover/${book.book_cover_photo!==null && book.book_cover_photo.match(/\d+$/)[0]>=1 && book.book_cover_photo.match(/\d+$/)[0]<=10 ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
+              </div>
+              <div class="thumb-content">
+                <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
+                <p class="item-price"><strike>{`$${book.book_price}`}</strike> <span>{`$${book.final_price}`}</span></p>
+              </div>
+            </div>
+          </div>
+        )
+      })
+  }
+
   render() {
     return (
       <Container>
@@ -72,6 +140,38 @@ class Home extends Component {
           <a class="carousel-control-next" href="#productCarousel" data-slide="next">
             <FontAwesomeIcon icon={faAngleRight} />
           </a>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <h3>Featured Books</h3>
+        </div>
+        <ul class="nav nav-pills justify-content-center">
+          <li class="nav-item">
+            <a href="#recommended-tab" data-toggle="tab" class="nav-link active">Recommended</a>
+          </li>
+          <li class="nav-item">
+            <a href="#popular-tab" data-toggle="tab" class="nav-link">Popular</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="recommended-tab">
+            <div class="featured-books">
+              <div class="book-item">
+                <div class="row">
+                  {this.mapRecommendedBooks()}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="popular-tab">
+            <div class="featured-books">
+              <div class="book-item">
+                <div class="row">
+                  {this.mapPopularBooks()}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </Container>
     )
