@@ -39,7 +39,7 @@ class Home extends Component {
                 <div class="col-lg-3 col-md-4 col-sm-6" key={index}>
                   <div class="thumb-wrapper">
                     <div class="img-box">
-                      <img src={`http://localhost/assets/bookcover/book${book.id<=10 ? book.id : 1}.jpg`} class="img-fluid" alt=""></img>
+                      <img src={`http://localhost/assets/bookcover/${book.book_cover_photo.match(/\d+$/)[0] ? book.book_cover_photo : 'default'}.jpg`} class="img-fluid" alt=""></img>
                     </div>
                     <div class="thumb-content">
                       <p><b>{`${book.book_title}`}</b><br/><i>{`${book.author.author_name}`}</i></p>
