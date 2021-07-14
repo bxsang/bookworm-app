@@ -78,19 +78,19 @@ class BookController extends Controller
 
     public function getOnSale()
     {
-        $books = Book::onSale()->get();
+        $books = Book::onSale()->take(10)->get();
         return BookResource::collection($books);
     }
 
     public function getRecommended()
     {
-        $books = Book::recommended()->get();
+        $books = Book::recommended()->take(8)->get();
         return BookResource::collection($books);
     }
 
     public function getPopular()
     {
-        $books = Book::popular()->get();
+        $books = Book::popular()->take(8)->get();
         return BookResource::collection($books);
     }
 

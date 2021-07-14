@@ -111,8 +111,7 @@ class Book extends Model
                         ->selectFinalPrice()
                         ->selectSubPrice()
                         ->orderByDesc('sub_price')
-                        ->orderBy('final_price')
-                        ->take(10);
+                        ->orderBy('final_price');
     }
 
     public function scopeRecommended($query)
@@ -121,8 +120,7 @@ class Book extends Model
                         ->selectFinalPrice()
                         ->selectAvgStar()
                         ->orderByDesc('avg_star')
-                        ->orderBy('final_price')
-                        ->take(8);
+                        ->orderBy('final_price');
     }
 
     public function scopePopular($query)
@@ -131,7 +129,6 @@ class Book extends Model
                         ->selectFinalPrice()
                         ->selectReviewsCount()
                         ->orderByDesc('reviews_count')
-                        ->orderBy('final_price')
-                        ->take(8);
+                        ->orderBy('final_price');
     }
 }
