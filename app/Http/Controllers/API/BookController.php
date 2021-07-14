@@ -114,4 +114,24 @@ class BookController extends Controller
 
         return $book->reviews;
     }
+
+    public function filterAndSort(Request $request)
+    {
+        $categories = explode(',', $request->categories);
+        $authors = explode(',', $request->authors);
+        $rating_stars = explode(',', $request->rating_stars);
+
+        $books = Book::whereHas('category', function($query) use($categories) {
+            $query->whereIn('category_id', $categories);
+        })
+            ->whereHas('author', function($query) use($authors) {
+                $query->whereIn('author_id', $authors);
+            })
+            ->whereHas('reviews', function($query) use($rating_stars) {
+                $query->whereIn('rating_start', $rating_stars);
+            })
+            ->get();
+
+        return $books;
+    }
 }

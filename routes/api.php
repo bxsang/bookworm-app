@@ -30,6 +30,7 @@ Route::get('books/popular', [BookController::class, 'getPopular']);
 Route::get('books/by/category/{category_id}', [BookController::class, 'getByCategory']);
 Route::get('books/by/author/{author_id}', [BookController::class, 'getByAuthor']);
 Route::get('books/{book_id}/reviews', [BookController::class, 'getReviews']);
+Route::get('books/filter', [BookController::class, 'filterAndSort']);
 
 Route::apiResource('users', UserController::class);
 Route::apiResource('books', BookController::class);
