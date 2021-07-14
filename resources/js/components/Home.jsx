@@ -58,7 +58,7 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <div class="section">
+        <div class="d-flex justify-content-between">
           <h3>On Sale</h3>
           <Button variant="primary">View all</Button>{' '}
         </div>
