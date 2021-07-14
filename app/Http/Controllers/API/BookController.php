@@ -115,12 +115,8 @@ class BookController extends Controller
         return $book->reviews;
     }
 
-    public function filterAndSort(Request $request)
+    private function filter($categories, $authors, $rating_stars)
     {
-        $categories = explode(',', $request->categories);
-        $authors = explode(',', $request->authors);
-        $rating_stars = explode(',', $request->rating_stars);
-
         $books = Book::whereHas('category', function($query) use($categories) {
             $query->whereIn('category_id', $categories);
         })
@@ -129,9 +125,42 @@ class BookController extends Controller
             })
             ->whereHas('reviews', function($query) use($rating_stars) {
                 $query->whereIn('rating_start', $rating_stars);
-            })
-            ->get();
+            });
 
         return $books;
+    }
+
+    public function filterAndSort(Request $request)
+    {
+        $categories = explode(',', $request->categories);
+        $authors = explode(',', $request->authors);
+        $rating_stars = explode(',', $request->rating_stars);
+        $sort_by = $request->sort_by;
+
+        $books = $this->filter($categories, $authors, $rating_stars);
+
+        switch ($sort_by) {
+            case 'on-sale':
+                $books = $books->onSale();
+                break;
+
+            case 'popularity':
+                $books = $books->popular();
+                break;
+
+            case 'price_asc':
+                $books = $books->selectFinalPrice()->orderBy('final_price');
+                break;
+
+            case 'price_desc':
+                $books = $books->selectFinalPrice()->orderByDesc('final_price');
+                break;
+
+            default:
+                return response(['message' => 'Invalid sort field'], 400);
+                break;
+        }
+
+        return $books->get();
     }
 }
