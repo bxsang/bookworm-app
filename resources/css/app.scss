@@ -1,38 +1,39 @@
 @import "~bootstrap/scss/bootstrap";
 
-.section {
-    display: flex;
-    justify-content: space-between;
+.navbar {
+    margin-bottom: 2rem;
 }
+
 #productCarousel {
     border: 1px ridge #e8d9d9;
+    margin-bottom: 2rem;
 }
 .carousel {
 	margin: 10px auto;
 	padding: 0 70px;
 }
-.carousel .carousel-item {
+.carousel .carousel-item, .book-item {
 	text-align: center;
 	overflow: hidden;
 }
-.carousel .carousel-item .img-box {
+.carousel .carousel-item .img-box, .book-item .img-box {
 	height: 160px;
 	width: 100%;
 	position: relative;
 }
-.carousel .carousel-item img {
+.carousel .carousel-item img, .book-item img {
 	max-width: 100%;
 	max-height: 100%;
 	display: inline-block;
 }
-.carousel .carousel-item .row {
+.carousel .carousel-item .row, .book-item .row {
     margin-top: 20px;
 }
-.carousel .thumb-wrapper {
+.thumb-wrapper {
 	text-align: center;
     width: 100%;
 }
-.carousel .thumb-content {
+.thumb-content {
 	padding: 15px;
 }
 .carousel-control-prev, .carousel-control-next {
@@ -42,14 +43,19 @@
 	margin: auto 0;
 	background: rgba(0, 0, 0, 0.2);
 }
-.carousel .item-price {
+.item-price {
 	font-size: 13px;
 }
-.carousel .item-price strike {
+.item-price strike {
 	color: #999;
 	margin-right: 5px;
 }
-.carousel .item-price span {
+.item-price span {
 	color: #86bd57;
 	font-size: 110%;
+}
+
+.featured-books {
+    border: 1px ridge #e8d9d9;
+    margin-bottom: 2rem;
 }
