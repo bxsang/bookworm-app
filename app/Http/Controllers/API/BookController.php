@@ -47,6 +47,7 @@ class BookController extends Controller
     public function show($book_id)
     {
         $book = Book::where('id', $book_id)
+                        ->selectFinalPrice()
                         ->selectAvgStar()
                         ->first();
         return new BookResource($book);
