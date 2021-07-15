@@ -44,8 +44,11 @@ class BookController extends Controller
      * @param  \App\Models\Book  $book
      * @return \Illuminate\Http\Response
      */
-    public function show(Book $book)
+    public function show($book_id)
     {
+        $book = Book::where('id', $book_id)
+                        ->selectAvgStar()
+                        ->first();
         return new BookResource($book);
     }
 
