@@ -30,6 +30,26 @@ class BookService {
       throw new Error('Get books failed')
     }
   }
+
+  async getOneBook(id) {
+    const endpoint = `/books/${id}`
+    const response = await Repository.get(endpoint)
+    if (response.data) {
+      return response.data
+    } else {
+      throw new Error('Get book failed')
+    }
+  }
+
+  async getBookReviews(id) {
+    const endpoint = `/books/${id}/reviews`
+    const response = await Repository.get(endpoint)
+    if (response.data) {
+      return response.data
+    } else {
+      throw new Error('Get book reviews failed')
+    }
+  }
 }
 
 export default new BookService()
