@@ -4,7 +4,7 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { chunk } from 'lodash'
 
-import BookCards from './BookCards'
+import BookCards from './utils/BookCards'
 import BooksService from '../services/books'
 
 class Home extends Component {
