@@ -61,12 +61,12 @@ class BookService {
     }
   }
 
-  async getFilteredBooks(categories, authors, rating_stars, sortBy, perPage) {
+  async getFilteredBooks(categories, authors, rating_stars, sortBy, perPage, page) {
     const formattedCategories = this.formatObj(categories)
     const formattedAuthors = this.formatObj(authors)
     const formattedStars = this.formatObj(rating_stars)
 
-    const endpoint = `/books/filter?categories=${formattedCategories}&authors=${formattedAuthors}&rating_stars=${formattedStars}&sort_by=${sortBy}&per_page=${perPage}`
+    const endpoint = `/books/filter?categories=${formattedCategories}&authors=${formattedAuthors}&rating_stars=${formattedStars}&sort_by=${sortBy}&per_page=${perPage}&page=${page}`
     const response = await Repository.get(endpoint)
     if (response) {
       return response

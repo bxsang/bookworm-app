@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Dropdown } from 'react-bootstrap'
 import BookCards from './utils/BookCards'
 import CheckBoxCard from './utils/CheckBoxCard'
+import MyPagination from './utils/MyPagination'
 import BookService from '../services/books'
 import CategoryService from '../services/categories'
 import AuthorService from '../services/authors'
@@ -23,6 +24,7 @@ const Shop = () => {
   const [checkedCategories, setCheckedCategories] = useState({})
   const [checkedAuthors, setCheckedAuthors] = useState({})
   const [checkedStars, setCheckedStars] = useState({1: true, 2: true, 3: true, 4: true, 5: true})
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     CategoryService.getAll().then((response) => {
@@ -51,7 +53,7 @@ const Shop = () => {
   }, [])
 
   let getFilteredBooks = () => {
-    BookService.getFilteredBooks(checkedCategories, checkedAuthors, checkedStars, currentSort, currentPerPage)
+    BookService.getFilteredBooks(checkedCategories, checkedAuthors, checkedStars, currentSort, currentPerPage, currentPage)
       .then((response) => {
         setBooks(response)
       })
@@ -151,6 +153,15 @@ const Shop = () => {
           <div class="row">
             {mapBooks()}
           </div>
+          <MyPagination
+            totPages={books.meta.last_page}
+            currentPage={currentPage}
+            pageClicked={(page) => {
+              setCurrentPage(page)
+              getFilteredBooks()
+            }}
+          >
+          </MyPagination>
         </div>
       </div>
     </Container>
