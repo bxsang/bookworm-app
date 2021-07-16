@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Dropdown } from 'react-bootstrap'
+import BookCards from './utils/BookCards'
 import CheckBoxCard from './utils/CheckBoxCard'
 import BookService from '../services/books'
 import CategoryService from '../services/categories'
@@ -57,6 +58,14 @@ const Shop = () => {
     console.log(books)
   }
 
+  let mapBooks = () => {
+    if (typeof(books) === 'undefined') {
+      return <div>Loading...</div>;
+    }
+
+    return <BookCards books={books.data} />
+  }
+
   if (typeof(categories) === 'undefined' || typeof(authors) === 'undefined'  || typeof(books) === 'undefined') {
     return <div>Loading...</div>
   }
@@ -94,7 +103,7 @@ const Shop = () => {
           />
         </div>
         <div class="col-sm-10 col-md-10 col-lg-10">
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between mb-4">
             <p>Showing {books.meta.from}-{books.meta.to} of {books.meta.total} books</p>
             <div>
               <Dropdown className="d-inline mx-2">
@@ -138,6 +147,9 @@ const Shop = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
+          </div>
+          <div class="row">
+            {mapBooks()}
           </div>
         </div>
       </div>
