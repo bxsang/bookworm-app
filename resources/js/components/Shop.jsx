@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button, Form } from 'react-bootstrap'
+import { Container, Dropdown } from 'react-bootstrap'
 import CheckBoxCard from './utils/CheckBoxCard'
 import BookService from '../services/books'
 import CategoryService from '../services/categories'
@@ -10,6 +10,15 @@ const Shop = () => {
   const [categories, setCategories] = useState(undefined)
   const [authors, setAuthors] = useState(undefined)
   const ratingStars = [1, 2, 3, 4, 5]
+  const sortBy = [
+    {'on-sale': 'On sale'},
+    {'popularity': 'Popularity'},
+    {'price_asc': 'Price low to high'},
+    {'price_desc': 'Price high to low'}
+  ]
+  const perPageList = [10, 20, 30, 40, 50]
+  const [currentSort, setCurrentSort] = useState('on-sale')
+  const [currentPerPage, setCurrentPerPage] = useState(10)
   const [checkedCategories, setCheckedCategories] = useState({})
   const [checkedAuthors, setCheckedAuthors] = useState({})
   const [checkedStars, setCheckedStars] = useState({1: true, 2: true, 3: true, 4: true, 5: true})
@@ -34,17 +43,21 @@ const Shop = () => {
         }))
       })
     })
+
+    BookService.getAllBooks().then((response) => {
+      setBooks(response)
+    })
   }, [])
 
   let getFilteredBooks = () => {
-    BookService.getFilteredBooks(checkedCategories, checkedAuthors, checkedStars, 'on-sale', 5)
+    BookService.getFilteredBooks(checkedCategories, checkedAuthors, checkedStars, currentSort, currentPerPage)
       .then((response) => {
         setBooks(response)
       })
     console.log(books)
   }
 
-  if (typeof(categories) === 'undefined' || typeof(authors) === 'undefined') {
+  if (typeof(categories) === 'undefined' || typeof(authors) === 'undefined'  || typeof(books) === 'undefined') {
     return <div>Loading...</div>
   }
 
@@ -79,78 +92,53 @@ const Shop = () => {
             setState={setCheckedStars}
             getBooks={getFilteredBooks}
           />
-          {/* <div class="card mb-2">
-            <div class="card-body">
-              <p><strong>Categories</strong></p>
-              {categories.map((category, index) => {
-                return (
-                  <Form.Check
-                    type="checkbox"
-                    label={category.category_name}
-                    checked={checkedCategories[category.id]}
-                    key={index}
-                    onChange={() => {
-                      setCheckedCategories(prevState => ({
-                        ...prevState,
-                        [category.id]: !prevState[category.id]
-                      }))
-                      console.log(checkedCategories)
-                    }}
-                    >
-                  </Form.Check>
-                )
-              })}
-            </div>
-          </div> */}
-          {/* <div class="card mb-2">
-            <div class="card-body">
-              <p><strong>Authors</strong></p>
-              {authors.map((author, index) => {
-                return (
-                  <Form.Check
-                    type="checkbox"
-                    label={author.author_name}
-                    checked={checkedAuthors[author.id]}
-                    key={index}
-                    onChange={() => {
-                      setCheckedAuthors(prevState => ({
-                        ...prevState,
-                        [author.id]: !prevState[author.id]
-                      }))
-                      console.log(checkedAuthors)
-                    }}
-                    >
-                  </Form.Check>
-                )
-              })}
-            </div>
-          </div>
-          <div class="card mb-2">
-            <div class="card-body">
-              <p><strong>Rating reviews</strong></p>
-              {ratingStars.map((star, index) => {
-                return (
-                  <Form.Check
-                    type="checkbox"
-                    label={`${star} star`}
-                    checked={checkedStars[star]}
-                    key={index}
-                    onChange={() => {
-                      setCheckedStars(prevState => ({
-                        ...prevState,
-                        [star]: !prevState[star]
-                      }))
-                      console.log(checkedStars)
-                    }}
-                    >
-                  </Form.Check>
-                )
-              })}
-            </div>
-          </div> */}
         </div>
         <div class="col-sm-10 col-md-10 col-lg-10">
-          <h3>Hello</h3>
+          <div class="d-flex justify-content-between">
+            <p>Showing {books.meta.from}-{books.meta.to} of {books.meta.total} books</p>
+            <div>
+              <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle variant="secondary">
+                  {`Sort by ${sortBy[0][currentSort]}`}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {sortBy.map((item, index) => {
+                    return (
+                      <Dropdown.Item
+                        onClick={() => {
+                          setCurrentSort(Object.keys(item)[0])
+                          getFilteredBooks()
+                          console.log(currentSort)
+                        }}
+                      >
+                        {item[Object.keys(item)[0]]}
+                      </Dropdown.Item>
+                    )
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
+              <Dropdown className="d-inline mx-2">
+                <Dropdown.Toggle variant="secondary">
+                  {`Show ${currentPerPage}`}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {perPageList.map((item, index) => {
+                    return (
+                      <Dropdown.Item
+                        onClick={() => {
+                          setCurrentPerPage(item)
+                          getFilteredBooks()
+                          console.log(currentPerPage)
+                        }}
+                      >
+                        {item}
+                      </Dropdown.Item>
+                    )
+                  })}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
         </div>
       </div>
     </Container>

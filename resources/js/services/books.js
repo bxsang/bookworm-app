@@ -1,6 +1,16 @@
 import Repository from "./repository"
 
 class BookService {
+  async getAllBooks() {
+    const endpoint = '/books'
+    const response = await Repository.get(endpoint)
+    if (response) {
+      return response
+    } else {
+      throw new Error('Get books failed')
+    }
+  }
+
   async getOnSaleBooks() {
     const endpoint = '/books/on-sale'
     const response = await Repository.get(endpoint)
