@@ -1,6 +1,16 @@
 import Repository from "./repository"
 
 class BookService {
+  async getAllBooks() {
+    const endpoint = '/books'
+    const response = await Repository.get(endpoint)
+    if (response) {
+      return response
+    } else {
+      throw new Error('Get books failed')
+    }
+  }
+
   async getOnSaleBooks() {
     const endpoint = '/books/on-sale'
     const response = await Repository.get(endpoint)
@@ -49,6 +59,30 @@ class BookService {
     } else {
       throw new Error('Get book reviews failed')
     }
+  }
+
+  async getFilteredBooks(categories, authors, rating_stars, sortBy, perPage, page) {
+    const formattedCategories = this.formatObj(categories)
+    const formattedAuthors = this.formatObj(authors)
+    const formattedStars = this.formatObj(rating_stars)
+
+    const endpoint = `/books/filter?categories=${formattedCategories}&authors=${formattedAuthors}&rating_stars=${formattedStars}&sort_by=${sortBy}&per_page=${perPage}&page=${page}`
+    const response = await Repository.get(endpoint)
+    if (response) {
+      return response
+    } else {
+      throw new Error('Get filtered books failed')
+    }
+  }
+
+  formatObj(obj) {
+    let result = []
+    for (const item in obj) {
+      if (obj[item]) {
+        result.push(item)
+      }
+    }
+    return result.join()
   }
 }
 
