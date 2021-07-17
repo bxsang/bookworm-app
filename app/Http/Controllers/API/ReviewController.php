@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ReviewRequest;
+use App\Http\Resources\ReviewResource;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,7 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        return Review::paginate(10);
+        return ReviewResource::collection(Review::paginate(10));
     }
 
     /**
@@ -30,7 +31,7 @@ class ReviewController extends Controller
         $validated_request = $request->validated();
         $review = Review::create($validated_request);
 
-        return response($review, 201);
+        return response(new ReviewResource($review), 201);
     }
 
     /**
@@ -41,7 +42,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        return $review;
+        return new ReviewResource($review);
     }
 
     /**
@@ -55,7 +56,7 @@ class ReviewController extends Controller
     {
         $review->update($request->all());
 
-        return $review;
+        return new ReviewResource($review);
     }
 
     /**

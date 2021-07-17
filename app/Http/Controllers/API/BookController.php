@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Http\Resources\BookResource;
+use App\Http\Resources\ReviewResource;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\Category;
@@ -48,6 +49,7 @@ class BookController extends Controller
     {
         $book = Book::where('id', $book_id)
                         ->selectFinalPrice()
+                        ->selectReviewsCount()
                         ->selectAvgStar()
                         ->first();
         return new BookResource($book);
@@ -112,11 +114,33 @@ class BookController extends Controller
         return BookResource::collection($author->books);
     }
 
-    public function getReviews($book_id)
+    public function getReviews(Request $request, $book_id)
     {
-        $book = Book::find($book_id);
+        $star = $request->star;
+        $sort_by = $request->sort_by;
+        $per_page = $request->per_page;
 
-        return $book->reviews;
+        $reviews = Review::where('book_id', '=', $book_id);
+
+        if (isset($star) && $star != 'all') {
+            $reviews = $reviews->where('rating_start', '=', $star);
+        }
+
+        switch ($sort_by) {
+            case 'date_asc':
+                $reviews = $reviews->orderBy('review_date');
+                break;
+
+            case 'date_desc':
+                $reviews = $reviews->orderByDesc('review_date');
+                break;
+
+            default:
+                return response(['message' => 'Invalid sort field'], 400);
+                break;
+        }
+
+        return ReviewResource::collection($reviews->paginate((int)$per_page));
     }
 
     private function filter($categories, $authors, $rating_stars)

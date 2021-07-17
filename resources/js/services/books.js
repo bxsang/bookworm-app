@@ -51,11 +51,11 @@ class BookService {
     }
   }
 
-  async getBookReviews(id) {
-    const endpoint = `/books/${id}/reviews`
+  async getBookReviews(id, sortBy, perPage, star) {
+    const endpoint = `/books/${id}/reviews?sort_by=${sortBy}&per_page=${perPage}&star=${star}`
     const response = await Repository.get(endpoint)
-    if (response.data) {
-      return response.data
+    if (response) {
+      return response
     } else {
       throw new Error('Get book reviews failed')
     }

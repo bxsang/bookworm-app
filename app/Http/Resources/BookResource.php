@@ -14,6 +14,19 @@ class BookResource extends JsonResource
      */
     public function toArray($request)
     {
+        $stars_list = [
+            '1' => 0,
+            '2' => 0,
+            '3' => 0,
+            '4' => 0,
+            '5' => 0,
+        ];
+        if ($this->reviews->isNotEmpty()) {
+            foreach ($this->reviews as $key => $value) {
+                $stars_list[$value['rating_start']] += 1;
+            }
+        }
+
         return [
             'id' => $this->id,
             'book_title' => $this->book_title,
@@ -27,7 +40,8 @@ class BookResource extends JsonResource
             // 'sub_price' => $this->sub_price + 0,
             'final_price' => $this->final_price + 0,
             'avg_star' => $this->avg_star + 0,
-            // 'reviews_count' => $this->reviews_count + 0,
+            'reviews_count' => $this->reviews_count + 0,
+            'star_list' => $stars_list,
         ];
     }
 }

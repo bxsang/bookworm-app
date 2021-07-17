@@ -1,23 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button, Form } from 'react-bootstrap'
+import { Container, Button, Form, Dropdown } from 'react-bootstrap'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BooksService from '../services/books'
 import { useParams } from 'react-router-dom'
-
-function getBook(bookId) {
-  return BooksService.getOneBook(bookId)
-}
+import MyPagination from './utils/MyPagination'
 
 const BookDetail = () => {
   const { id } = useParams()
   const [book, setBook] = useState(undefined)
+  const [reviews, setReviews] = useState(undefined)
   const [buyQuantity, setBuyQuantity] = useState(1)
+  const sortBy = [
+    { date_desc: 'newest to oldest' },
+    { date_asc: 'oldest to newest' },
+  ]
+  const perPageList = [10, 20, 30, 40, 50]
+  const [currentSort, setCurrentSort] = useState('date_desc')
+  const [currentPerPage, setCurrentPerPage] = useState(5)
+  const [currentStar, setCurrentStar] = useState('all')
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
-    getBook(id).then((response) => {
+    BooksService.getOneBook(id).then((response) => {
       setBook(response)
     })
+
+    getBookReviews()
   }, [])
 
   const increaseBuyQuantity = () => {
@@ -28,6 +37,18 @@ const BookDetail = () => {
     if (buyQuantity > 1) {
       setBuyQuantity(buyQuantity - 1)
     }
+  }
+
+  const getBookReviews = () => {
+    BooksService.getBookReviews(
+      id,
+      currentSort,
+      currentPerPage,
+      currentStar
+    ).then((response) => {
+      setReviews(response)
+    })
+    console.log(reviews)
   }
 
   if (typeof book === 'undefined') {
@@ -71,12 +92,112 @@ const BookDetail = () => {
           </div>
           <div className="card mb-4">
             <div className="card-header">
-              <h3>Customer reviews</h3>
+              <h4>Customer reviews (filter by {currentStar} star)</h4>
             </div>
             <div className="card-body">
               <h4>
                 <b>{book.avg_star}&nbsp;Star</b>
               </h4>
+              <div className="d-flex justify-content-start">
+                <Button
+                  variant="link"
+                  onClick={() => {
+                    setCurrentStar('all')
+                    console.log(currentStar)
+                    getBookReviews()
+                  }}
+                >{`Total (${book.reviews_count})`}</Button>
+                {book.star_list.map((star, index) => {
+                  return (
+                    <Button
+                      variant="link"
+                      onClick={() => {
+                        setCurrentStar(index + 1)
+                        console.log(currentStar)
+                        getBookReviews()
+                      }}
+                      key={index}
+                    >{`${index + 1} star (${star})`}</Button>
+                  )
+                })}
+              </div>
+              {typeof reviews === 'undefined' ? (
+                <div>Loading...</div>
+              ) : (
+                <>
+                  <div className="d-flex justify-content-between mb-4">
+                    <p>
+                      Showing {reviews.meta.from}-{reviews.meta.to} of{' '}
+                      {reviews.meta.total} reviews
+                    </p>
+                    <div>
+                      <Dropdown className="d-inline mx-2">
+                        <Dropdown.Toggle variant="secondary">
+                          {`Sort by date: ${sortBy[0][currentSort]}`}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          {sortBy.map((item, index) => {
+                            return (
+                              <Dropdown.Item
+                                onClick={() => {
+                                  setCurrentSort(Object.keys(item)[0])
+                                  getBookReviews()
+                                  console.log(currentSort)
+                                }}
+                                key={index}
+                              >
+                                {item[Object.keys(item)[0]]}
+                              </Dropdown.Item>
+                            )
+                          })}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      <Dropdown className="d-inline mx-2">
+                        <Dropdown.Toggle variant="secondary">
+                          {`Show ${currentPerPage}`}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          {perPageList.map((item, index) => {
+                            return (
+                              <Dropdown.Item
+                                onClick={() => {
+                                  setCurrentPerPage(item)
+                                  getBookReviews()
+                                  console.log(currentPerPage)
+                                }}
+                                key={index}
+                              >
+                                {item}
+                              </Dropdown.Item>
+                            )
+                          })}
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
+                  </div>
+                  {reviews.data.map((review, index) => {
+                    return (
+                      <>
+                        <p key={index}>
+                          <strong>{review.review_title}</strong>
+                          {' | '}
+                          {`${review.rating_start} stars`}
+                        </p>
+                        <p>{review.review_details}</p>
+                        <p>{review.review_date}</p>
+                      </>
+                    )
+                  })}
+                  <MyPagination
+                    totPages={reviews.meta.last_page}
+                    currentPage={currentPage}
+                    pageClicked={(page) => {
+                      setCurrentPage(page)
+                      getBookReviews()
+                    }}
+                  ></MyPagination>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -117,7 +238,7 @@ const BookDetail = () => {
           </div>
           <div className="card mb-4">
             <div className="card-header">
-              <h3>Write a review</h3>
+              <h4>Write a review</h4>
             </div>
             <div className="card-body">
               <Form>
