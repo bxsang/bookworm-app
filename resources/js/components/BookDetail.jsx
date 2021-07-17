@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Form, Dropdown } from 'react-bootstrap'
+import { useParams } from 'react-router-dom'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import BooksService from '../services/books'
-import { useParams } from 'react-router-dom'
 import MyPagination from './utils/MyPagination'
+import BooksService from '../services/books'
+import ReviewService from '../services/review'
 
 const BookDetail = () => {
   const { id } = useParams()
@@ -20,6 +22,9 @@ const BookDetail = () => {
   const [currentPerPage, setCurrentPerPage] = useState(10)
   const [currentStar, setCurrentStar] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
+  const [reviewTitle, setReviewTitle] = useState('')
+  const [reviewDetail, setReviewDetail] = useState('')
+  const [reviewStar, setReviewStar] = useState('1')
 
   useEffect(() => {
     BooksService.getOneBook(id).then((response) => {
@@ -49,6 +54,37 @@ const BookDetail = () => {
       setReviews(response)
     })
     console.log(reviews)
+  }
+
+  const handleReviewTitleChange = (event) => {
+    setReviewTitle(event.target.value)
+  }
+
+  const handleReviewDetailChange = (event) => {
+    setReviewDetail(event.target.value)
+  }
+
+  const handleReviewStarChange = (event) => {
+    setReviewStar(event.target.value)
+  }
+
+  const handleReviewFormSubmit = (event) => {
+    event.preventDefault()
+
+    const review = {
+      user_id: 1,
+      book_id: id,
+      review_title: reviewTitle,
+      review_details: reviewDetail,
+      rating_start: reviewStar,
+    }
+
+    ReviewService.addReview(review)
+      .then((response) => {
+        console.log('add review success')
+        getBookReviews()
+      })
+      .catch((error) => alert(error))
   }
 
   if (typeof book === 'undefined') {
@@ -185,6 +221,7 @@ const BookDetail = () => {
                         </p>
                         <p>{review.review_details}</p>
                         <p>{review.review_date}</p>
+                        <hr />
                       </>
                     )
                   })}
@@ -241,10 +278,14 @@ const BookDetail = () => {
               <h4>Write a review</h4>
             </div>
             <div className="card-body">
-              <Form>
+              <Form onSubmit={handleReviewFormSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Add a title</Form.Label>
-                  <Form.Control type="text" placeholder="" />
+                  <Form.Control
+                    type="text"
+                    value={reviewTitle}
+                    onChange={handleReviewTitleChange}
+                  />
                 </Form.Group>
                 <Form.Group
                   className="mb-3"
@@ -253,11 +294,20 @@ const BookDetail = () => {
                   <Form.Label>
                     Detaill please! Your review helps other shoppers.
                   </Form.Label>
-                  <Form.Control as="textarea" rows={3} />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    value={reviewDetail}
+                    onChange={handleReviewDetailChange}
+                  />
                 </Form.Group>
                 <Form.Group className="mb-3">
-                  <Form.Label>Add a title</Form.Label>
-                  <Form.Control as="select">
+                  <Form.Label>Select a rating star</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={reviewStar}
+                    onChange={handleReviewStarChange}
+                  >
                     <option value="1">1 star</option>
                     <option value="2">2 star</option>
                     <option value="3">3 star</option>
