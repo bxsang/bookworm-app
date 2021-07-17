@@ -1,4 +1,5 @@
-const mix = require('laravel-mix');
+const mix = require('laravel-mix')
+require('laravel-mix-eslint')
 
 /*
  |--------------------------------------------------------------------------
@@ -11,6 +12,14 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.sass('resources/css/app.scss', 'public/css');
-mix.js('resources/js/app.jsx', 'public/js').react().sourceMaps();
-mix.copyDirectory('resources/assets', 'public/assets');
+mix.sass('resources/css/app.scss', 'public/css')
+mix
+  .js('resources/js/app.jsx', 'public/js')
+  .react()
+  .eslint({
+    fix: true,
+    extensions: ['js', 'jsx'],
+    exclude: 'node_modules/',
+  })
+  .sourceMaps()
+mix.copyDirectory('resources/assets', 'public/assets')
