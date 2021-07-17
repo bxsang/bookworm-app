@@ -10,9 +10,9 @@ const About = () => (
         <strong>Welcome to Bookworm</strong>
       </h1>
       <h5>
-        `&quot;`Bookworm is an independent New York bookstore and language
-        school with locations in Manhattan and Brooklyn. We specialize in travel
-        books and language classes.`&quot;`
+        &quot;Bookworm is an independent New York bookstore and language school
+        with locations in Manhattan and Brooklyn. We specialize in travel books
+        and language classes.&quot;
       </h5>
     </div>
 
@@ -22,19 +22,16 @@ const About = () => (
           <strong>Our Story</strong>
         </h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id
-          tristique magna, ut vestibulum ligula. Donec sit amet condimentum
-          ipsum. Nulla facilisi. Etiam ut rutrum nulla, non euismod nibh.
-          Vivamus sed sagittis purus, vitae imperdiet sapien. In tempus metus a
-          scelerisque semper. Sed ligula lorem, egestas eu vestibulum non,
-          imperdiet eget ligula. Duis lobortis elit ligula, a molestie purus
-          consequat quis. Ut a felis accumsan, imperdiet nisl ac, convallis
-          risus. Vivamus rhoncus tincidunt ornare. Donec tempor justo tellus,
-          nec ullamcorper mi egestas sed. Nulla efficitur accumsan magna, et
-          mollis elit ultricies eu. Donec sem quam, sodales at massa eget,
-          tincidunt posuere risus. Orci varius natoque penatibus et magnis dis
-          parturient montes, nascetur ridiculus mus. Donec iaculis vehicula orci
-          ac consectetur. Cras eget urna vitae arcu commodo dictum.{' '}
+          The name Bookworm was taken from the original name for New York
+          International Airport, which was renamed JFK in December 1963.
+        </p>
+        <p>
+          Our Manhattan store has just moved to the West Village. Our new
+          location is 170 7th Avenue South, at the corner of Perry Street.
+        </p>
+        <p>
+          From March 2008 through May 2016, the store was located in the
+          Flatiron District.
         </p>
       </div>
       <div className="col-sm-6 col-md-6 col-lg-6">
@@ -42,16 +39,15 @@ const About = () => (
           <strong>Our Vision</strong>
         </h2>
         <p>
-          In sit amet gravida ligula, ut interdum sem. Suspendisse velit risus,
-          rhoncus quis tellus id, tincidunt placerat felis. Phasellus accumsan
-          metus vel vestibulum sagittis. Sed varius eu felis at congue. Vivamus
-          pellentesque nisi ac orci ultrices cursus. Vivamus elit nisi, commodo
-          sit amet venenatis ac, faucibus ut arcu. Nullam suscipit dolor eget
-          tellus pulvinar, id commodo erat dignissim. Nam ornare pellentesque
-          purus nec volutpat. Pellentesque eros augue, posuere non metus quis,
-          dignissim vehicula enim. Mauris libero elit, semper quis euismod a,
-          commodo ut nulla. Integer volutpat nisl velit, id consectetur libero
-          vehicula et.
+          One of the last travel bookstores in the country, our Manhattan store
+          carries a range of guidebooks (all 10% off) to suit the needs and
+          tastes of every traveller and budget.
+        </p>
+        <p>
+          We believe that a novel or travelogue can be just as valuable a key to
+          a place as any guidebook, and our well-read, well-travelled staff is
+          happy to make reading recommendations for any traveller, book lover,
+          or gift giver.
         </p>
       </div>
     </div>
