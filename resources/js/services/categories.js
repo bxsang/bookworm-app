@@ -1,4 +1,4 @@
-import Repository from "./repository"
+import Repository from './repository'
 
 class CategoryService {
   async getAll() {

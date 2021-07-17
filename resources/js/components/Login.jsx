@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 
-import Form from "react-validation/build/form";
-import Input from "react-validation/build/input";
-import CheckButton from "react-validation/build/button";
+import Form from 'react-validation/build/form'
+import Input from 'react-validation/build/input'
+import CheckButton from 'react-validation/build/button'
 
-import { connect } from "react-redux";
-import { login } from "../actions/auth";
+import { connect } from 'react-redux'
+import { login } from '../actions/auth'
 
 const required = (value) => {
   if (!value) {
@@ -14,71 +14,74 @@ const required = (value) => {
       <div className="alert alert-danger" role="alert">
         This field is required!
       </div>
-    );
+    )
   }
-};
+}
 
 class Login extends Component {
   constructor(props) {
-    super(props);
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangePassword = this.onChangePassword.bind(this);
+    super(props)
+    this.handleLogin = this.handleLogin.bind(this)
+    this.onChangeEmail = this.onChangeEmail.bind(this)
+    this.onChangePassword = this.onChangePassword.bind(this)
 
     this.state = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       loading: false,
-    };
+    }
   }
 
   onChangeEmail(e) {
     this.setState({
       email: e.target.value,
-    });
+    })
   }
 
   onChangePassword(e) {
     this.setState({
       password: e.target.value,
-    });
+    })
   }
 
   handleLogin(e) {
-    e.preventDefault();
+    e.preventDefault()
 
     this.setState({
       loading: true,
-    });
+    })
 
-    this.form.validateAll();
+    this.form.validateAll()
 
-    const { dispatch, history } = this.props;
+    const { dispatch, history } = this.props
 
     if (this.checkBtn.context._errors.length === 0) {
-      let credentials = {'email': this.state.email, 'password': this.state.password}
+      const credentials = {
+        email: this.state.email,
+        password: this.state.password,
+      }
       dispatch(login(credentials))
         .then(() => {
-          history.push("/profile");
-          window.location.reload();
+          history.push('/profile')
+          window.location.reload()
         })
         .catch(() => {
           this.setState({
-            loading: false
-          });
-        });
+            loading: false,
+          })
+        })
     } else {
       this.setState({
         loading: false,
-      });
+      })
     }
   }
 
   render() {
-    const { isLoggedIn, message } = this.props;
+    const { isLoggedIn, message } = this.props
 
     if (isLoggedIn) {
-      return <Redirect to="/profile" />;
+      return <Redirect to="/profile" />
     }
 
     return (
@@ -93,7 +96,7 @@ class Login extends Component {
           <Form
             onSubmit={this.handleLogin}
             ref={(c) => {
-              this.form = c;
+              this.form = c
             }}
           >
             <div className="form-group">
@@ -140,25 +143,25 @@ class Login extends Component {
               </div>
             )}
             <CheckButton
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               ref={(c) => {
-                this.checkBtn = c;
+                this.checkBtn = c
               }}
             />
           </Form>
         </div>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
-  const { isLoggedIn } = state.auth;
-  const { message } = state.message;
+  const { isLoggedIn } = state.auth
+  const { message } = state.message
   return {
     isLoggedIn,
-    message
-  };
+    message,
+  }
 }
 
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(Login)

@@ -1,4 +1,4 @@
-import Repository from "./repository"
+import Repository from './repository'
 
 class BookService {
   async getAllBooks() {
@@ -61,10 +61,17 @@ class BookService {
     }
   }
 
-  async getFilteredBooks(categories, authors, rating_stars, sortBy, perPage, page) {
+  async getFilteredBooks(
+    categories,
+    authors,
+    ratingStars,
+    sortBy,
+    perPage,
+    page
+  ) {
     const formattedCategories = this.formatObj(categories)
     const formattedAuthors = this.formatObj(authors)
-    const formattedStars = this.formatObj(rating_stars)
+    const formattedStars = this.formatObj(ratingStars)
 
     const endpoint = `/books/filter?categories=${formattedCategories}&authors=${formattedAuthors}&rating_stars=${formattedStars}&sort_by=${sortBy}&per_page=${perPage}&page=${page}`
     const response = await Repository.get(endpoint)
@@ -76,7 +83,7 @@ class BookService {
   }
 
   formatObj(obj) {
-    let result = []
+    const result = []
     for (const item in obj) {
       if (obj[item]) {
         result.push(item)

@@ -47,6 +47,8 @@ jobs:
         node-version: '14'
     - name: Install NPM dependencies
       run: npm install
+    - name: Lint
+      run: npm run lint
     - name: Compile assets for production
       run: npm run production
 

@@ -1,7 +1,7 @@
-import Repository from "./repository"
+import Repository from './repository'
 
 class AuthService {
-  async login (credentials) {
+  async login(credentials) {
     const endpoint = '/login'
     const response = await Repository.post(endpoint, credentials)
     if (response.user && response.access_token) {
@@ -12,7 +12,7 @@ class AuthService {
     return response
   }
 
-  async register (info) {
+  async register(info) {
     const endpoint = '/register'
     const response = await Repository.post(endpoint, info)
     if (response.id) {
@@ -22,10 +22,9 @@ class AuthService {
     }
   }
 
-  logout () {
+  logout() {
     localStorage.removeItem('user')
   }
-
 }
 
 export default new AuthService()

@@ -13,36 +13,42 @@ const Shop = () => {
   const [authors, setAuthors] = useState(undefined)
   const ratingStars = [1, 2, 3, 4, 5]
   const sortBy = [
-    {'on-sale': 'On sale'},
-    {'popularity': 'Popularity'},
-    {'price_asc': 'Price low to high'},
-    {'price_desc': 'Price high to low'}
+    { 'on-sale': 'On sale' },
+    { popularity: 'Popularity' },
+    { price_asc: 'Price low to high' },
+    { price_desc: 'Price high to low' },
   ]
   const perPageList = [10, 20, 30, 40, 50]
   const [currentSort, setCurrentSort] = useState('on-sale')
   const [currentPerPage, setCurrentPerPage] = useState(10)
   const [checkedCategories, setCheckedCategories] = useState({})
   const [checkedAuthors, setCheckedAuthors] = useState({})
-  const [checkedStars, setCheckedStars] = useState({1: true, 2: true, 3: true, 4: true, 5: true})
+  const [checkedStars, setCheckedStars] = useState({
+    1: true,
+    2: true,
+    3: true,
+    4: true,
+    5: true,
+  })
   const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     CategoryService.getAll().then((response) => {
       setCategories(response)
-      response.forEach(category => {
-        setCheckedCategories(prevState => ({
+      response.forEach((category) => {
+        setCheckedCategories((prevState) => ({
           ...prevState,
-          [category.id]: true
+          [category.id]: true,
         }))
       })
     })
 
     AuthorService.getAll().then((response) => {
       setAuthors(response)
-      response.forEach(author => {
-        setCheckedAuthors(prevState => ({
+      response.forEach((author) => {
+        setCheckedAuthors((prevState) => ({
           ...prevState,
-          [author.id]: true
+          [author.id]: true,
         }))
       })
     })
@@ -52,23 +58,33 @@ const Shop = () => {
     })
   }, [])
 
-  let getFilteredBooks = () => {
-    BookService.getFilteredBooks(checkedCategories, checkedAuthors, checkedStars, currentSort, currentPerPage, currentPage)
-      .then((response) => {
-        setBooks(response)
-      })
+  const getFilteredBooks = () => {
+    BookService.getFilteredBooks(
+      checkedCategories,
+      checkedAuthors,
+      checkedStars,
+      currentSort,
+      currentPerPage,
+      currentPage
+    ).then((response) => {
+      setBooks(response)
+    })
     console.log(books)
   }
 
-  let mapBooks = () => {
-    if (typeof(books) === 'undefined') {
-      return <div>Loading...</div>;
+  const mapBooks = () => {
+    if (typeof books === 'undefined') {
+      return <div>Loading...</div>
     }
 
     return <BookCards books={books.data} />
   }
 
-  if (typeof(categories) === 'undefined' || typeof(authors) === 'undefined'  || typeof(books) === 'undefined') {
+  if (
+    typeof categories === 'undefined' ||
+    typeof authors === 'undefined' ||
+    typeof books === 'undefined'
+  ) {
     return <div>Loading...</div>
   }
 
@@ -76,9 +92,11 @@ const Shop = () => {
     <Container>
       <h2>Books</h2>
       <hr />
-      <div class="row shop mt-5">
-        <div class="filter col-sm-2 col-md-2 col-lg-2">
-          <p><strong>Filter by</strong></p>
+      <div className="row shop mt-5">
+        <div className="filter col-sm-2 col-md-2 col-lg-2">
+          <p>
+            <strong>Filter by</strong>
+          </p>
           <CheckBoxCard
             title="Categories"
             items={categories}
@@ -104,9 +122,12 @@ const Shop = () => {
             getBooks={getFilteredBooks}
           />
         </div>
-        <div class="col-sm-10 col-md-10 col-lg-10">
-          <div class="d-flex justify-content-between mb-4">
-            <p>Showing {books.meta.from}-{books.meta.to} of {books.meta.total} books</p>
+        <div className="col-sm-10 col-md-10 col-lg-10">
+          <div className="d-flex justify-content-between mb-4">
+            <p>
+              Showing {books.meta.from}-{books.meta.to} of {books.meta.total}{' '}
+              books
+            </p>
             <div>
               <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle variant="secondary">
@@ -121,6 +142,7 @@ const Shop = () => {
                           getFilteredBooks()
                           console.log(currentSort)
                         }}
+                        key={index}
                       >
                         {item[Object.keys(item)[0]]}
                       </Dropdown.Item>
@@ -141,6 +163,7 @@ const Shop = () => {
                           getFilteredBooks()
                           console.log(currentPerPage)
                         }}
+                        key={index}
                       >
                         {item}
                       </Dropdown.Item>
@@ -150,9 +173,7 @@ const Shop = () => {
               </Dropdown>
             </div>
           </div>
-          <div class="row">
-            {mapBooks()}
-          </div>
+          <div className="row">{mapBooks()}</div>
           <MyPagination
             totPages={books.meta.last_page}
             currentPage={currentPage}
@@ -160,8 +181,7 @@ const Shop = () => {
               setCurrentPage(page)
               getFilteredBooks()
             }}
-          >
-          </MyPagination>
+          ></MyPagination>
         </div>
       </div>
     </Container>

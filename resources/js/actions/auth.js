@@ -5,38 +5,38 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   SET_MESSAGE,
-} from "./types";
+} from './types'
 
-import AuthService from "../services/auth";
+import AuthService from '../services/auth'
 
 export const register = (info) => (dispatch) => {
   return AuthService.register(info).then(
     (response) => {
       dispatch({
         type: REGISTER_SUCCESS,
-      });
+      })
 
       dispatch({
         type: SET_MESSAGE,
         payload: response,
-      });
+      })
 
-      return Promise.resolve();
+      return Promise.resolve()
     },
     (error) => {
       dispatch({
         type: REGISTER_FAIL,
-      });
+      })
 
       dispatch({
         type: SET_MESSAGE,
         payload: error.message,
-      });
+      })
 
-      return Promise.reject();
+      return Promise.reject()
     }
-  );
-};
+  )
+}
 
 export const login = (credentials) => (dispatch) => {
   return AuthService.login(credentials).then(
@@ -44,29 +44,29 @@ export const login = (credentials) => (dispatch) => {
       dispatch({
         type: LOGIN_SUCCESS,
         payload: { user: response },
-      });
+      })
 
-      return Promise.resolve();
+      return Promise.resolve()
     },
     (error) => {
       dispatch({
         type: LOGIN_FAIL,
-      });
+      })
 
       dispatch({
         type: SET_MESSAGE,
         payload: error.message,
-      });
+      })
 
-      return Promise.reject();
+      return Promise.reject()
     }
-  );
-};
+  )
+}
 
 export const logout = () => (dispatch) => {
-  AuthService.logout();
+  AuthService.logout()
 
   dispatch({
     type: LOGOUT,
-  });
-};
+  })
+}

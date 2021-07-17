@@ -1,6 +1,6 @@
-import React, {Component} from 'react'
-import { Container, Row, Button, Card } from 'react-bootstrap'
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import React, { Component } from 'react'
+import { Container, Button } from 'react-bootstrap'
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { chunk } from 'lodash'
 
@@ -13,7 +13,7 @@ class Home extends Component {
     this.state = {
       onSaleBooks: undefined,
       recommendedBooks: undefined,
-      popularBooks: undefined
+      popularBooks: undefined,
     }
   }
 
@@ -24,41 +24,38 @@ class Home extends Component {
   }
 
   getOnSaleBooks() {
-    BooksService.getOnSaleBooks().then(
-      (response) => {
-        this.setState({
-          onSaleBooks: response
-        })
-      }
-    )
+    BooksService.getOnSaleBooks().then((response) => {
+      this.setState({
+        onSaleBooks: response,
+      })
+    })
   }
 
   getRecommendedBooks() {
-    BooksService.getRecommendedBooks().then(
-      (response) => {
-        this.setState({
-          recommendedBooks: response
-        })
-      }
-    )
+    BooksService.getRecommendedBooks().then((response) => {
+      this.setState({
+        recommendedBooks: response,
+      })
+    })
   }
 
   getPopularBooks() {
-    BooksService.getPopularBooks().then(
-      (response) => {
-        this.setState({
-          popularBooks: response
-        })
-      }
-    )
+    BooksService.getPopularBooks().then((response) => {
+      this.setState({
+        popularBooks: response,
+      })
+    })
   }
 
   mapBooksSlide() {
-    let books = chunk(this.state.onSaleBooks, 4)
+    const books = chunk(this.state.onSaleBooks, 4)
     return books.map((chunks, index) => {
       return (
-        <div class={`carousel-item ${index==0 ? "active" : ""}`} key={index}>
-          <div class="row">
+        <div
+          className={`carousel-item ${index === 0 ? 'active' : ''}`}
+          key={index}
+        >
+          <div className="row">
             <BookCards books={chunks} />
           </div>
         </div>
@@ -67,19 +64,19 @@ class Home extends Component {
   }
 
   mapRecommendedBooks() {
-    if (typeof(this.state.recommendedBooks) === 'undefined') {
-      return <div>Loading...</div>;
+    if (typeof this.state.recommendedBooks === 'undefined') {
+      return <div>Loading...</div>
     }
-    let books = this.state.recommendedBooks
+    const books = this.state.recommendedBooks
 
     return <BookCards books={books} />
   }
 
   mapPopularBooks() {
-    if (typeof(this.state.popularBooks) === 'undefined') {
-      return <div>Loading...</div>;
+    if (typeof this.state.popularBooks === 'undefined') {
+      return <div>Loading...</div>
     }
-    let books = this.state.popularBooks
+    const books = this.state.popularBooks
 
     return <BookCards books={books} />
   }
@@ -87,49 +84,64 @@ class Home extends Component {
   render() {
     return (
       <Container>
-        <div class="d-flex justify-content-between">
+        <div className="d-flex justify-content-between">
           <h3>On Sale</h3>
           <Button variant="primary">View all</Button>{' '}
         </div>
-        <div id="productCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-          <div class="carousel-inner">
-            {this.mapBooksSlide()}
-          </div>
-          <a class="carousel-control-prev" href="#productCarousel" data-slide="prev">
+        <div
+          id="productCarousel"
+          className="carousel slide"
+          data-ride="carousel"
+          data-interval="0"
+        >
+          <div className="carousel-inner">{this.mapBooksSlide()}</div>
+          <a
+            className="carousel-control-prev"
+            href="#productCarousel"
+            data-slide="prev"
+          >
             <FontAwesomeIcon icon={faAngleLeft} />
           </a>
-          <a class="carousel-control-next" href="#productCarousel" data-slide="next">
+          <a
+            className="carousel-control-next"
+            href="#productCarousel"
+            data-slide="next"
+          >
             <FontAwesomeIcon icon={faAngleRight} />
           </a>
         </div>
 
-        <div class="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
           <h3>Featured Books</h3>
         </div>
-        <ul class="nav nav-pills justify-content-center">
-          <li class="nav-item">
-            <a href="#recommended-tab" data-toggle="tab" class="nav-link active">Recommended</a>
+        <ul className="nav nav-pills justify-content-center">
+          <li className="nav-item">
+            <a
+              href="#recommended-tab"
+              data-toggle="tab"
+              className="nav-link active"
+            >
+              Recommended
+            </a>
           </li>
-          <li class="nav-item">
-            <a href="#popular-tab" data-toggle="tab" class="nav-link">Popular</a>
+          <li className="nav-item">
+            <a href="#popular-tab" data-toggle="tab" className="nav-link">
+              Popular
+            </a>
           </li>
         </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="recommended-tab">
-            <div class="featured-books">
-              <div class="book-item">
-                <div class="row">
-                  {this.mapRecommendedBooks()}
-                </div>
+        <div className="tab-content">
+          <div className="tab-pane active" id="recommended-tab">
+            <div className="featured-books">
+              <div className="book-item">
+                <div className="row">{this.mapRecommendedBooks()}</div>
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="popular-tab">
-            <div class="featured-books">
-              <div class="book-item">
-                <div class="row">
-                  {this.mapPopularBooks()}
-                </div>
+          <div className="tab-pane" id="popular-tab">
+            <div className="featured-books">
+              <div className="book-item">
+                <div className="row">{this.mapPopularBooks()}</div>
               </div>
             </div>
           </div>
