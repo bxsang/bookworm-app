@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost/api'
+const API_URL = process.env.MIX_API_URL
 
 function getToken() {
   try {

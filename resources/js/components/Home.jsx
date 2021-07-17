@@ -15,6 +15,8 @@ class Home extends Component {
       recommendedBooks: undefined,
       popularBooks: undefined,
     }
+
+    console.log(process.env.MIX_API_URL)
   }
 
   componentDidMount() {
