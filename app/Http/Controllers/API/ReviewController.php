@@ -29,6 +29,7 @@ class ReviewController extends Controller
     public function store(ReviewRequest $request)
     {
         $validated_request = $request->validated();
+        $validated_request = array_merge($validated_request, ['review_date' => now()]);
         $review = Review::create($validated_request);
 
         return response(new ReviewResource($review), 201);
