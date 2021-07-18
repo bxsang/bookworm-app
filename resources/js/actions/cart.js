@@ -23,7 +23,7 @@ export const addToCart = (book) => (dispatch) => {
 
 export const increaseQuantity = (bookId) => (dispatch) => {
   if (Object.keys(cart).includes(bookId)) {
-    cart[bookId] += 1
+    cart[bookId].quantity += 1
     dispatch({
       type: INCREASE_QUANTITY,
       payload: cart,
@@ -37,8 +37,8 @@ export const increaseQuantity = (bookId) => (dispatch) => {
 
 export const decreaseQuantity = (bookId) => (dispatch) => {
   if (Object.keys(cart).includes(bookId)) {
-    if (cart[bookId] > 1) {
-      cart[bookId] += 1
+    if (cart[bookId].quantity > 1) {
+      cart[bookId].quantity -= 1
       dispatch({
         type: DECREASE_QUANTITY,
         payload: cart,
