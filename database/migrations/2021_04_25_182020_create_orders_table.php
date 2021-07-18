@@ -15,6 +15,7 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamp('order_date');
             $table->decimal('order_amount', 8, 2, true);
             $table->softDeletes();
