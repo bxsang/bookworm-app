@@ -15,7 +15,6 @@ class CreateOrderItemsTable extends Migration
     {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('order_id')->constrained('orders');
             $table->foreignId('book_id')->constrained('books');
             $table->unsignedTinyInteger('quantity');

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -9,20 +10,6 @@ class NavBar extends Component {
   constructor(props) {
     super(props)
     this.logOut = this.logOut.bind(this)
-
-    this.state = {
-      currentUser: undefined,
-    }
-  }
-
-  componentDidMount() {
-    const user = this.props.user
-
-    if (user) {
-      this.setState({
-        currentUser: user,
-      })
-    }
   }
 
   logOut() {
@@ -30,8 +17,6 @@ class NavBar extends Component {
   }
 
   render() {
-    const { currentUser } = this.state
-
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand as={Link} to="/">
@@ -50,15 +35,17 @@ class NavBar extends Component {
               About
             </Nav.Link>
             <Nav.Link as={Link} to="/cart">
-              Cart
+              {this.props.cartItems
+                ? `Cart (${Object.keys(this.props.cartItems).length})`
+                : `Cart (0)`}
             </Nav.Link>
-            {currentUser ? (
-              <div>
+            {this.props.user ? (
+              <>
                 <Nav.Link as={Link} to="/profile">
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={this.logOut}>Logout</Nav.Link>
-              </div>
+              </>
             ) : (
               <Nav.Link as={Link} to="/login">
                 Login
@@ -73,8 +60,10 @@ class NavBar extends Component {
 
 function mapStateToProps(state) {
   const { user } = state.auth
+  const cartItems = state.cart.items
   return {
     user,
+    cartItems,
   }
 }
 

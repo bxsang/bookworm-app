@@ -7,6 +7,7 @@ use App\Http\Controllers\API\AuthorController;
 use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\DiscountController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\ReviewController;
 use App\Http\Controllers\API\UserController;
 
@@ -38,3 +39,4 @@ Route::apiResource('authors', AuthorController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('discounts', DiscountController::class);
 Route::apiResource('reviews', ReviewController::class);
+Route::apiResource('orders', OrderController::class);
