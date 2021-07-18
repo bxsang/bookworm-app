@@ -1,14 +1,16 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Form, Dropdown } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MyPagination from './utils/MyPagination'
 import BooksService from '../services/books'
 import ReviewService from '../services/review'
+import { addToCart } from '../actions/cart'
 
-const BookDetail = () => {
+const BookDetail = (props) => {
   const { id } = useParams()
   const [book, setBook] = useState(undefined)
   const [reviews, setReviews] = useState(undefined)
@@ -25,6 +27,8 @@ const BookDetail = () => {
   const [reviewTitle, setReviewTitle] = useState('')
   const [reviewDetail, setReviewDetail] = useState('')
   const [reviewStar, setReviewStar] = useState('1')
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     BooksService.getOneBook(id).then((response) => {
@@ -54,6 +58,13 @@ const BookDetail = () => {
       setReviews(response)
     })
     console.log(reviews)
+  }
+
+  const handleAddToCart = () => {
+    const item = {}
+    item[id] = buyQuantity
+    dispatch(addToCart(item))
+    console.log('add book to cart')
   }
 
   const handleReviewTitleChange = (event) => {
@@ -267,7 +278,11 @@ const BookDetail = () => {
                     <FontAwesomeIcon icon={faPlus} />
                   </a>
                 </span>
-                <Button variant="secondary" className="mt-3">
+                <Button
+                  variant="secondary"
+                  className="mt-3"
+                  onClick={handleAddToCart}
+                >
                   Add to cart
                 </Button>
               </form>
