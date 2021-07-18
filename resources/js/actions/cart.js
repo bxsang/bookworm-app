@@ -3,6 +3,7 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   DELETE_ITEM,
+  CLEAR_CART,
 } from './types'
 
 const cart = JSON.parse(localStorage.getItem('cart')) || {}
@@ -68,4 +69,12 @@ export const deleteItem = (bookId) => (dispatch) => {
   } else {
     console.log('no book found in cart')
   }
+}
+
+export const clearCart = () => (dispatch) => {
+  localStorage.removeItem('cart')
+
+  dispatch({
+    type: CLEAR_CART,
+  })
 }

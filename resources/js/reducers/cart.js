@@ -4,11 +4,12 @@ import {
   INCREASE_QUANTITY,
   DECREASE_QUANTITY,
   DELETE_ITEM,
+  CLEAR_CART,
 } from '../actions/types'
 
 const cart = JSON.parse(localStorage.getItem('cart'))
 
-const initialState = cart ? { items: cart } : { items: null }
+const initialState = cart ? { items: cart } : { items: {} }
 
 export default function (state = initialState, action) {
   const { type, payload } = action
@@ -33,6 +34,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         items: payload,
+      }
+    case CLEAR_CART:
+      return {
+        ...state,
+        items: {},
       }
     default:
       return state

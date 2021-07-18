@@ -3,7 +3,13 @@ import { connect, useDispatch } from 'react-redux'
 import { Container, Table, Button } from 'react-bootstrap'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { increaseQuantity, decreaseQuantity, deleteItem } from '../actions/cart'
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  deleteItem,
+  clearCart,
+} from '../actions/cart'
+import OrderService from '../services/orders'
 
 const Cart = (props) => {
   const dispatch = useDispatch()
@@ -29,7 +35,24 @@ const Cart = (props) => {
   }
 
   const handlePlaceOrder = () => {
-    console.log('place order')
+    const booksToOrder = { user_id: 1, books: [] }
+    for (const book in props.cartItems) {
+      booksToOrder.books.push({
+        book_id: book,
+        quantity: props.cartItems[book].quantity,
+      })
+    }
+
+    OrderService.addOrder(booksToOrder)
+      .then((response) => {
+        if (response.success) {
+          dispatch(clearCart())
+          alert('Order success!!')
+        } else {
+          alert('Order failed')
+        }
+      })
+      .catch((error) => console.log(error))
   }
 
   return (
