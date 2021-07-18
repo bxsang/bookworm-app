@@ -1,4 +1,10 @@
-import { ADD_CART } from '../actions/types'
+/* eslint-disable no-unused-vars */
+import {
+  ADD_CART,
+  INCREASE_QUANTITY,
+  DECREASE_QUANTITY,
+  DELETE_ITEM,
+} from '../actions/types'
 
 const cart = JSON.parse(localStorage.getItem('cart'))
 
@@ -9,6 +15,21 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case ADD_CART:
+      return {
+        ...state,
+        items: payload,
+      }
+    case INCREASE_QUANTITY:
+      return {
+        ...state,
+        items: payload,
+      }
+    case DECREASE_QUANTITY:
+      return {
+        ...state,
+        items: payload,
+      }
+    case DELETE_ITEM:
       return {
         ...state,
         items: payload,

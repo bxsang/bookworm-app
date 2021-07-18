@@ -62,7 +62,14 @@ const BookDetail = (props) => {
 
   const handleAddToCart = () => {
     const item = {}
-    item[id] = buyQuantity
+    item[id] = {
+      quantity: buyQuantity,
+      book_title: book.book_title,
+      author_name: book.author.author_name,
+      book_price: book.book_price,
+      final_price: book.final_price,
+      book_cover_photo: book.book_cover_photo,
+    }
     dispatch(addToCart(item))
     console.log('add book to cart')
   }
