@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Form, Dropdown } from 'react-bootstrap'
+import Moment from 'react-moment'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -239,7 +240,9 @@ const BookDetail = () => {
                           {`${review.rating_start} stars`}
                         </p>
                         <p>{review.review_details}</p>
-                        <p>{review.review_date}</p>
+                        <Moment format="MMM D YYYY">
+                          {review.review_date}
+                        </Moment>
                         <hr />
                       </>
                     )
