@@ -20,7 +20,12 @@ class NavBar extends Component {
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand as={Link} to="/">
-          Bookworm
+          <img
+            alt="Home"
+            src="/assets/bookworm_icon.svg"
+            height="25"
+            className="d-inline-block align-top"
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse>
