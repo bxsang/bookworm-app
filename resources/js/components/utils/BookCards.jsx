@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { formatCurrency } from '../../helpers/currency-formatter'
 
 const BookCards = (props) => {
   return props.books.map((book, index) => {
@@ -29,11 +30,9 @@ const BookCards = (props) => {
             </p>
             <p className="item-price">
               {book.book_price !== book.final_price ? (
-                <strike>{`$${book.book_price}`}</strike>
+                <strike>{formatCurrency(book.book_price)}</strike>
               ) : null}
-              <span>
-                <strong>{`$${book.final_price}`}</strong>
-              </span>
+              <strong>{formatCurrency(book.final_price)}</strong>
             </p>
           </div>
         </div>

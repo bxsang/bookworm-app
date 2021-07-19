@@ -10,6 +10,7 @@ import {
   clearCart,
 } from '../actions/cart'
 import OrderService from '../services/orders'
+import { formatCurrency } from '../helpers/currency-formatter'
 
 const Cart = (props) => {
   const dispatch = useDispatch()
@@ -99,10 +100,10 @@ const Cart = (props) => {
                       <p>{book.author_name}</p>
                     </td>
                     <td>
-                      <strong>{`$${book.final_price}`}</strong>
+                      <strong>{formatCurrency(book.final_price)}</strong>
                       {book.book_price !== book.final_price ? (
                         <p>
-                          <strike>{`$${book.book_price}`}</strike>
+                          <strike>{formatCurrency(book.book_price)}</strike>
                         </p>
                       ) : null}
                     </td>
@@ -133,9 +134,10 @@ const Cart = (props) => {
                     </td>
                     <td>
                       <strong>
-                        $
-                        {parseFloat(
-                          (book.final_price * book.quantity).toFixed(2)
+                        {formatCurrency(
+                          parseFloat(
+                            (book.final_price * book.quantity).toFixed(2)
+                          )
                         )}
                       </strong>
                     </td>
@@ -152,7 +154,7 @@ const Cart = (props) => {
             </div>
             <div className="card-body">
               <h2 className="d-flex justify-content-center">
-                <strong>${cartTotals}</strong>
+                <strong>{formatCurrency(cartTotals)}</strong>
               </h2>
               <Button
                 style={{ width: '100%' }}

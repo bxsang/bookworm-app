@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Container, Button, Form, Dropdown } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
@@ -9,8 +8,9 @@ import MyPagination from './utils/MyPagination'
 import BooksService from '../services/books'
 import ReviewService from '../services/review'
 import { addToCart } from '../actions/cart'
+import { formatCurrency } from '../helpers/currency-formatter'
 
-const BookDetail = (props) => {
+const BookDetail = () => {
   const { id } = useParams()
   const [book, setBook] = useState(undefined)
   const [reviews, setReviews] = useState(undefined)
@@ -98,6 +98,7 @@ const BookDetail = (props) => {
     }
 
     ReviewService.addReview(review)
+      // eslint-disable-next-line no-unused-vars
       .then((response) => {
         console.log('add review success')
         getBookReviews()
@@ -261,10 +262,10 @@ const BookDetail = (props) => {
             <div className="card-header">
               <h3>
                 {book.book_price !== book.final_price ? (
-                  <strike>{`$${book.book_price}`}</strike>
+                  <strike>{formatCurrency(book.book_price)}</strike>
                 ) : null}
                 <span>
-                  <strong>{`$${book.final_price}`}</strong>
+                  <strong>{formatCurrency(book.final_price)}</strong>
                 </span>
               </h3>
             </div>
