@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
 import { Container, Dropdown } from 'react-bootstrap'
 import BookCards from './utils/BookCards'
@@ -110,36 +111,38 @@ const Shop = () => {
           <p>
             <strong>Filter by</strong>
           </p>
-          <CheckBoxCard
-            title="Categories"
-            items={categories}
-            label="category_name"
-            state={checkedCategories}
-            setState={setCheckedCategories}
-            getBooks={() => {
-              setShouldComponentUpdate(true)
-            }}
-          />
-          <CheckBoxCard
-            title="Authors"
-            items={authors}
-            label="author_name"
-            state={checkedAuthors}
-            setState={setCheckedAuthors}
-            getBooks={() => {
-              setShouldComponentUpdate(true)
-            }}
-          />
-          <CheckBoxCard
-            title="Rating reviews"
-            items={ratingStars}
-            label="star"
-            state={checkedStars}
-            setState={setCheckedStars}
-            getBooks={() => {
-              setShouldComponentUpdate(true)
-            }}
-          />
+          <div className="accordion" id="bookFilterAccordion">
+            <CheckBoxCard
+              title="Categories"
+              items={categories}
+              label="category_name"
+              state={checkedCategories}
+              setState={setCheckedCategories}
+              getBooks={() => {
+                setShouldComponentUpdate(true)
+              }}
+            />
+            <CheckBoxCard
+              title="Authors"
+              items={authors}
+              label="author_name"
+              state={checkedAuthors}
+              setState={setCheckedAuthors}
+              getBooks={() => {
+                setShouldComponentUpdate(true)
+              }}
+            />
+            <CheckBoxCard
+              title="Rating reviews"
+              items={ratingStars}
+              label="star"
+              state={checkedStars}
+              setState={setCheckedStars}
+              getBooks={() => {
+                setShouldComponentUpdate(true)
+              }}
+            />
+          </div>
         </div>
         <div className="col-sm-10 col-md-10 col-lg-10">
           <div className="d-flex justify-content-between mb-4">
