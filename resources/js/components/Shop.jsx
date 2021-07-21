@@ -31,32 +31,46 @@ const Shop = () => {
     5: true,
   })
   const [currentPage, setCurrentPage] = useState(1)
+  const [shouldComponentUpdate, setShouldComponentUpdate] = useState(false)
 
   useEffect(() => {
-    CategoryService.getAll().then((response) => {
-      setCategories(response)
-      response.forEach((category) => {
-        setCheckedCategories((prevState) => ({
-          ...prevState,
-          [category.id]: true,
-        }))
-      })
-    })
+    ;(async () => {
+      await Promise.all([
+        CategoryService.getAll().then((response) => {
+          setCategories(response)
+          response.forEach((category) => {
+            setCheckedCategories((prevState) => ({
+              ...prevState,
+              [category.id]: true,
+            }))
+          })
+        }),
 
-    AuthorService.getAll().then((response) => {
-      setAuthors(response)
-      response.forEach((author) => {
-        setCheckedAuthors((prevState) => ({
-          ...prevState,
-          [author.id]: true,
-        }))
-      })
-    })
+        AuthorService.getAll().then((response) => {
+          setAuthors(response)
+          response.forEach((author) => {
+            setCheckedAuthors((prevState) => ({
+              ...prevState,
+              [author.id]: true,
+            }))
+          })
+        }),
+      ])
 
-    BookService.getAllBooks().then((response) => {
-      setBooks(response)
-    })
+      setShouldComponentUpdate(true)
+    })()
   }, [])
+
+  useEffect(() => {
+    if (
+      shouldComponentUpdate &&
+      typeof categories !== 'undefined' &&
+      typeof authors !== 'undefined'
+    ) {
+      getFilteredBooks()
+      setShouldComponentUpdate(false)
+    }
+  }, [shouldComponentUpdate])
 
   const getFilteredBooks = () => {
     BookService.getFilteredBooks(
@@ -69,7 +83,6 @@ const Shop = () => {
     ).then((response) => {
       setBooks(response)
     })
-    console.log(books)
   }
 
   const mapBooks = () => {
@@ -103,7 +116,9 @@ const Shop = () => {
             label="category_name"
             state={checkedCategories}
             setState={setCheckedCategories}
-            getBooks={getFilteredBooks}
+            getBooks={() => {
+              setShouldComponentUpdate(true)
+            }}
           />
           <CheckBoxCard
             title="Authors"
@@ -111,7 +126,9 @@ const Shop = () => {
             label="author_name"
             state={checkedAuthors}
             setState={setCheckedAuthors}
-            getBooks={getFilteredBooks}
+            getBooks={() => {
+              setShouldComponentUpdate(true)
+            }}
           />
           <CheckBoxCard
             title="Rating reviews"
@@ -119,7 +136,9 @@ const Shop = () => {
             label="star"
             state={checkedStars}
             setState={setCheckedStars}
-            getBooks={getFilteredBooks}
+            getBooks={() => {
+              setShouldComponentUpdate(true)
+            }}
           />
         </div>
         <div className="col-sm-10 col-md-10 col-lg-10">
@@ -139,8 +158,7 @@ const Shop = () => {
                       <Dropdown.Item
                         onClick={() => {
                           setCurrentSort(Object.keys(item)[0])
-                          getFilteredBooks()
-                          console.log(currentSort)
+                          setShouldComponentUpdate(true)
                         }}
                         key={index}
                       >
@@ -160,8 +178,7 @@ const Shop = () => {
                       <Dropdown.Item
                         onClick={() => {
                           setCurrentPerPage(item)
-                          getFilteredBooks()
-                          console.log(currentPerPage)
+                          setShouldComponentUpdate(true)
                         }}
                         key={index}
                       >
@@ -179,7 +196,7 @@ const Shop = () => {
             currentPage={currentPage}
             pageClicked={(page) => {
               setCurrentPage(page)
-              getFilteredBooks()
+              setShouldComponentUpdate(true)
             }}
           ></MyPagination>
         </div>
