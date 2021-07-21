@@ -28,6 +28,7 @@ const BookDetail = () => {
   const [reviewTitle, setReviewTitle] = useState('')
   const [reviewDetail, setReviewDetail] = useState('')
   const [reviewStar, setReviewStar] = useState('1')
+  const [shouldUpdateReviews, setShouldUpdateReviews] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -36,8 +37,15 @@ const BookDetail = () => {
       setBook(response)
     })
 
-    getBookReviews()
+    setShouldUpdateReviews(true)
   }, [])
+
+  useEffect(() => {
+    if (shouldUpdateReviews) {
+      getBookReviews()
+      setShouldUpdateReviews(false)
+    }
+  }, [shouldUpdateReviews])
 
   const increaseBuyQuantity = () => {
     setBuyQuantity(buyQuantity + 1)
@@ -101,8 +109,8 @@ const BookDetail = () => {
     ReviewService.addReview(review)
       // eslint-disable-next-line no-unused-vars
       .then((response) => {
-        console.log('add review success')
-        getBookReviews()
+        alert('add review success')
+        setShouldUpdateReviews(true)
       })
       .catch((error) => alert(error))
   }
@@ -160,7 +168,7 @@ const BookDetail = () => {
                   onClick={() => {
                     setCurrentStar('all')
                     console.log(currentStar)
-                    getBookReviews()
+                    setShouldUpdateReviews(true)
                   }}
                 >{`Total (${book.reviews_count})`}</Button>
                 {book.star_list.map((star, index) => {
@@ -170,7 +178,7 @@ const BookDetail = () => {
                       onClick={() => {
                         setCurrentStar(index + 1)
                         console.log(currentStar)
-                        getBookReviews()
+                        setShouldUpdateReviews(true)
                       }}
                       key={index}
                     >{`${index + 1} star (${star})`}</Button>
@@ -197,7 +205,7 @@ const BookDetail = () => {
                               <Dropdown.Item
                                 onClick={() => {
                                   setCurrentSort(Object.keys(item)[0])
-                                  getBookReviews()
+                                  setShouldUpdateReviews(true)
                                   console.log(currentSort)
                                 }}
                                 key={index}
@@ -218,7 +226,7 @@ const BookDetail = () => {
                               <Dropdown.Item
                                 onClick={() => {
                                   setCurrentPerPage(item)
-                                  getBookReviews()
+                                  setShouldUpdateReviews(true)
                                   console.log(currentPerPage)
                                 }}
                                 key={index}
@@ -252,7 +260,7 @@ const BookDetail = () => {
                     currentPage={currentPage}
                     pageClicked={(page) => {
                       setCurrentPage(page)
-                      getBookReviews()
+                      setShouldUpdateReviews(true)
                     }}
                   ></MyPagination>
                 </>
