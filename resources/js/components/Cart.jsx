@@ -172,11 +172,11 @@ const Cart = (props) => {
   )
 }
 
-function mapStateToProps(state) {
-  const cartItems = state.cart.items
-  return {
-    cartItems,
+const mapStateToProps = (state) => {
+  const data = {
+    cartItems: { ...state.cart.items },
   }
+  return data
 }
 
 export default connect(mapStateToProps)(Cart)

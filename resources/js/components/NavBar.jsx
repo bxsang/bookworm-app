@@ -63,13 +63,12 @@ class NavBar extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { user } = state.auth
-  const cartItems = state.cart.items
-  return {
-    user,
-    cartItems,
+const mapStateToProps = (state) => {
+  const data = {
+    user: { ...state.auth.user },
+    cartItems: { ...state.cart.items },
   }
+  return data
 }
 
 export default connect(mapStateToProps)(NavBar)
