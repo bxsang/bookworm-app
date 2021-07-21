@@ -48,7 +48,9 @@ const BookDetail = () => {
   }, [shouldUpdateReviews])
 
   const increaseBuyQuantity = () => {
-    setBuyQuantity(buyQuantity + 1)
+    if (buyQuantity < 8) {
+      setBuyQuantity(buyQuantity + 1)
+    }
   }
 
   const decreaseBuyQuantity = () => {
