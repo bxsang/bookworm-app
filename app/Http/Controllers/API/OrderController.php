@@ -43,6 +43,9 @@ class OrderController extends Controller
         $order_items = [];
         $order_amount = 0;
         foreach ($validated_request['books'] as $key => $value) {
+            if ($value['quantity'] < 1 || $value['quantity'] > 8) {
+                return response(['success' => false, 'message' => 'Invalid order qantity']);
+            }
             $book = Book::where('id', $value['book_id'])
                         ->selectFinalPrice()
                         ->first();
