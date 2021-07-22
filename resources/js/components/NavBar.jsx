@@ -40,7 +40,7 @@ const NavBar = (props) => {
           <Nav.Link as={Link} to="/shop">
             {location.pathname === '/shop' ? (
               <b>
-                <u>Home</u>
+                <u>Shop</u>
               </b>
             ) : (
               `Shop`
@@ -64,7 +64,7 @@ const NavBar = (props) => {
               <>{`Cart (${sumCart})`}</>
             )}
           </Nav.Link>
-          {props.user ? (
+          {/* {props.user ? (
             <>
               <Nav.Link as={Link} to="/profile">
                 {location.pathname === '/profile' ? (
@@ -81,7 +81,7 @@ const NavBar = (props) => {
             <Nav.Link as={Link} to="/login">
               Login
             </Nav.Link>
-          )}
+          )} */}
         </Nav>
       </Navbar.Collapse>
     </Navbar>
