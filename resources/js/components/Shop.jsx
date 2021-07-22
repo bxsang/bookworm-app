@@ -13,12 +13,12 @@ const Shop = () => {
   const [categories, setCategories] = useState(undefined)
   const [authors, setAuthors] = useState(undefined)
   const ratingStars = [1, 2, 3, 4, 5]
-  const sortBy = [
-    { 'on-sale': 'On sale' },
-    { popularity: 'Popularity' },
-    { price_asc: 'Price low to high' },
-    { price_desc: 'Price high to low' },
-  ]
+  const sortBy = {
+    'on-sale': 'On sale',
+    popularity: 'Popularity',
+    price_asc: 'Price low to high',
+    price_desc: 'Price high to low',
+  }
   const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('on-sale')
   const [currentPerPage, setCurrentPerPage] = useState(10)
@@ -153,19 +153,19 @@ const Shop = () => {
             <div>
               <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle variant="secondary">
-                  {`Sort by ${sortBy[0][currentSort]}`}
+                  {`Sort by ${sortBy[currentSort]}`}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  {sortBy.map((item, index) => {
+                  {Object.keys(sortBy).map((item, index) => {
                     return (
                       <Dropdown.Item
                         onClick={() => {
-                          setCurrentSort(Object.keys(item)[0])
+                          setCurrentSort(item)
                           setShouldComponentUpdate(true)
                         }}
                         key={index}
                       >
-                        {item[Object.keys(item)[0]]}
+                        {sortBy[item]}
                       </Dropdown.Item>
                     )
                   })}

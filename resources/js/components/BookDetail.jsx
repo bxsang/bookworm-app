@@ -25,10 +25,14 @@ const BookDetail = () => {
   const [book, setBook] = useState(undefined)
   const [reviews, setReviews] = useState(undefined)
   const [buyQuantity, setBuyQuantity] = useState(1)
-  const sortBy = [
-    { date_desc: 'newest to oldest' },
-    { date_asc: 'oldest to newest' },
-  ]
+  // const sortBy = [
+  //   { date_desc: 'newest to oldest' },
+  //   { date_asc: 'oldest to newest' },
+  // ]
+  const sortBy = {
+    date_desc: 'newest to oldest',
+    date_asc: 'oldest to newest',
+  }
   const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('date_desc')
   const [currentPerPage, setCurrentPerPage] = useState(10)
@@ -215,20 +219,19 @@ const BookDetail = () => {
                     <div>
                       <Dropdown className="d-inline mx-2">
                         <Dropdown.Toggle variant="secondary">
-                          {`Sort by date: ${sortBy[0][currentSort]}`}
+                          {`Sort by date: ${sortBy[currentSort]}`}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          {sortBy.map((item, index) => {
+                          {Object.keys(sortBy).map((item, index) => {
                             return (
                               <Dropdown.Item
                                 onClick={() => {
-                                  setCurrentSort(Object.keys(item)[0])
+                                  setCurrentSort(item)
                                   setShouldUpdateReviews(true)
-                                  console.log(currentSort)
                                 }}
                                 key={index}
                               >
-                                {item[Object.keys(item)[0]]}
+                                {sortBy[item]}
                               </Dropdown.Item>
                             )
                           })}
