@@ -25,10 +25,6 @@ const BookDetail = () => {
   const [book, setBook] = useState(undefined)
   const [reviews, setReviews] = useState(undefined)
   const [buyQuantity, setBuyQuantity] = useState(1)
-  // const sortBy = [
-  //   { date_desc: 'newest to oldest' },
-  //   { date_asc: 'oldest to newest' },
-  // ]
   const sortBy = {
     date_desc: 'newest to oldest',
     date_asc: 'oldest to newest',
