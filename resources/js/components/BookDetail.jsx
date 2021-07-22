@@ -21,7 +21,7 @@ const BookDetail = () => {
     { date_desc: 'newest to oldest' },
     { date_asc: 'oldest to newest' },
   ]
-  const perPageList = [10, 20, 30, 40, 50]
+  const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('date_desc')
   const [currentPerPage, setCurrentPerPage] = useState(10)
   const [currentStar, setCurrentStar] = useState('all')

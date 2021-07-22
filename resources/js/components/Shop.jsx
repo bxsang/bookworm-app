@@ -19,7 +19,7 @@ const Shop = () => {
     { price_asc: 'Price low to high' },
     { price_desc: 'Price high to low' },
   ]
-  const perPageList = [10, 20, 30, 40, 50]
+  const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('on-sale')
   const [currentPerPage, setCurrentPerPage] = useState(10)
   const [checkedCategories, setCheckedCategories] = useState({})
