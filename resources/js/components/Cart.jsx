@@ -21,22 +21,26 @@ const Cart = (props) => {
   const [orderFailed, setOrderFailed] = useState(false)
 
   let cartTotals = 0.0
+  let sumCart = 0
 
-  const handleIncrease = (bookId, price) => {
-    dispatch(increaseQuantity(bookId))
-    cartTotals += price
-    console.log(`increase ${bookId}`)
+  for (const ele in props.cartItems) {
+    sumCart += props.cartItems[ele].quantity
+  }
+
+  const handleIncrease = (bookId, price, currentQuantity) => {
+    if (currentQuantity < 8) {
+      dispatch(increaseQuantity(bookId))
+      cartTotals += price
+    }
   }
 
   const handleDecrease = (bookId, price, currentQuantity) => {
     if (currentQuantity > 1) {
       dispatch(decreaseQuantity(bookId))
       cartTotals += price
-      console.log(`decrease ${bookId}`)
     } else if (currentQuantity === 1) {
       dispatch(deleteItem(bookId))
       cartTotals += price
-      console.log(`delete ${bookId}`)
     }
   }
 
@@ -71,7 +75,7 @@ const Cart = (props) => {
 
   return (
     <Container>
-      <h4>Your cart: {Object.keys(props.cartItems).length} items</h4>
+      <h4>Your cart: {sumCart} items</h4>
       <hr />
       <Row>
         <Col sm={8} md={8} lg={8}>
@@ -141,7 +145,9 @@ const Cart = (props) => {
                         />
                         <a
                           className="btn"
-                          onClick={() => handleIncrease(item, book.book_price)}
+                          onClick={() =>
+                            handleIncrease(item, book.book_price, book.quantity)
+                          }
                         >
                           <FontAwesomeIcon icon={faPlus} />
                         </a>
