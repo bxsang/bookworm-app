@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { Container, Table, Button } from 'react-bootstrap'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -108,7 +108,9 @@ const Cart = (props) => {
                     </td>
                     <td>
                       <p>
-                        <strong>{book.book_title}</strong>
+                        <Link to={`/book/${item}`}>
+                          <strong>{`${book.book_title}`}</strong>
+                        </Link>
                       </p>
                       <p>{book.author_name}</p>
                     </td>
