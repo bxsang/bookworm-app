@@ -340,6 +340,7 @@ const BookDetail = () => {
                   <Form.Control
                     type="text"
                     value={reviewTitle}
+                    maxLength="120"
                     onChange={handleReviewTitleChange}
                   />
                 </Form.Group>
