@@ -302,18 +302,18 @@ const BookDetail = () => {
               <form className="add-cart">
                 <p>Quantity</p>
                 <span className="number">
-                  <Button onClick={decreaseBuyQuantity}>
+                  <a className="btn" onClick={decreaseBuyQuantity}>
                     <FontAwesomeIcon icon={faMinus} />
-                  </Button>
+                  </a>
                   <input
                     id="buy-quantity"
                     type="text"
                     name="buy-quantity"
                     value={buyQuantity}
                   />
-                  <Button onClick={increaseBuyQuantity}>
+                  <a className="btn" onClick={increaseBuyQuantity}>
                     <FontAwesomeIcon icon={faPlus} />
-                  </Button>
+                  </a>
                 </span>
                 <Button
                   variant="secondary"
