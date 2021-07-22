@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { chunk } from 'lodash'
@@ -86,7 +87,9 @@ class Home extends Component {
       <Container>
         <div className="d-flex justify-content-between">
           <h3>On Sale</h3>
-          <Button variant="primary">View all</Button>{' '}
+          <Link to="/shop">
+            <Button variant="primary">View all</Button>{' '}
+          </Link>
         </div>
         <div
           id="productCarousel"
