@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Nav, Tab, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -88,7 +88,7 @@ class Home extends Component {
         <div className="d-flex justify-content-between">
           <h3>On Sale</h3>
           <Link to="/shop">
-            <Button variant="primary">View all</Button>{' '}
+            <Button variant="secondary">View all</Button>{' '}
           </Link>
         </div>
         <div
@@ -117,38 +117,32 @@ class Home extends Component {
         <div className="d-flex justify-content-center">
           <h3>Featured Books</h3>
         </div>
-        <ul className="nav nav-pills justify-content-center">
-          <li className="nav-item">
-            <a
-              href="#recommended-tab"
-              data-toggle="tab"
-              className="nav-link active"
-            >
-              Recommended
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#popular-tab" data-toggle="tab" className="nav-link">
-              Popular
-            </a>
-          </li>
-        </ul>
-        <div className="tab-content">
-          <div className="tab-pane active" id="recommended-tab">
-            <div className="featured-books">
-              <div className="book-item">
-                <div className="row">{this.mapRecommendedBooks()}</div>
+        <Tab.Container id="left-tabs-example" defaultActiveKey="recommended">
+          <Nav variant="pills" className="justify-content-center">
+            <Nav.Item>
+              <Nav.Link eventKey="recommended">Recommended</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="popular">Popular</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          <Tab.Content>
+            <Tab.Pane eventKey="recommended">
+              <div className="featured-books">
+                <div className="book-item">
+                  <Row>{this.mapRecommendedBooks()}</Row>
+                </div>
               </div>
-            </div>
-          </div>
-          <div className="tab-pane" id="popular-tab">
-            <div className="featured-books">
-              <div className="book-item">
-                <div className="row">{this.mapPopularBooks()}</div>
+            </Tab.Pane>
+            <Tab.Pane eventKey="popular">
+              <div className="featured-books">
+                <div className="book-item">
+                  <Row>{this.mapPopularBooks()}</Row>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
+            </Tab.Pane>
+          </Tab.Content>
+        </Tab.Container>
       </Container>
     )
   }

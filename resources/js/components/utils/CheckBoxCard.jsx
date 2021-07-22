@@ -1,23 +1,23 @@
 import React from 'react'
-import { Form } from 'react-bootstrap'
+import { Form, Card, Button } from 'react-bootstrap'
 
 const CheckBoxCard = (props) => {
   return (
-    <div className="card">
-      <div className="card-header" id={`heading-${props.label}`}>
+    <Card>
+      <Card.Header id={`heading-${props.label}`}>
         <h2 className="mb-0">
-          <button
-            className="btn btn-link btn-block text-left"
-            type="button"
+          <Button
+            variant="link"
+            className="btn-block text-left"
             data-toggle="collapse"
             data-target={`#collapse-${props.label}`}
             aria-expanded="false"
             aria-controls={`collapse-${props.label}`}
           >
             {props.title}
-          </button>
+          </Button>
         </h2>
-      </div>
+      </Card.Header>
 
       <div
         id={`collapse-${props.label}`}
@@ -25,7 +25,7 @@ const CheckBoxCard = (props) => {
         aria-labelledby={`heading-${props.label}`}
         data-parent="#bookFilterAccordion"
       >
-        <div className="card-body">
+        <Card.Body>
           <p>
             <strong>{props.title}</strong>
           </p>
@@ -61,9 +61,9 @@ const CheckBoxCard = (props) => {
               ></Form.Check>
             )
           })}
-        </div>
+        </Card.Body>
       </div>
-    </div>
+    </Card>
   )
 }
 

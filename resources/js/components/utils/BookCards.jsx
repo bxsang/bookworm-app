@@ -1,11 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Col } from 'react-bootstrap'
 import { formatCurrency } from '../../helpers/currency-formatter'
 
 const BookCards = (props) => {
   return props.books.map((book, index) => {
     return (
-      <div className="col-lg-3 col-md-4 col-sm-6" key={index}>
+      <Col lg={3} md={4} sm={6} key={index}>
         <div className="thumb-wrapper">
           <div className="img-box">
             <img
@@ -36,7 +37,7 @@ const BookCards = (props) => {
             </p>
           </div>
         </div>
-      </div>
+      </Col>
     )
   })
 }

@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button, Form, Dropdown } from 'react-bootstrap'
+import {
+  Container,
+  Button,
+  Form,
+  Dropdown,
+  Card,
+  Row,
+  Col,
+} from 'react-bootstrap'
 import Moment from 'react-moment'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -133,12 +141,12 @@ const BookDetail = () => {
     <Container>
       <h2>{book.category.category_name}</h2>
       <hr />
-      <div className="row book-detail">
-        <div className="col-sm-8 col-md-8 col-lg-8">
-          <div className="card mb-4">
-            <div className="card-body">
-              <div className="row">
-                <div className="col-sm-3 col-md-3 col-lg-3">
+      <Row className="book-detail">
+        <Col sm={8} md={8} lg={8}>
+          <Card className="mb-4">
+            <Card.Body>
+              <Row>
+                <Col sm={3} md={3} lg={3}>
                   <img
                     src={`http://localhost/assets/bookcover/${
                       book.book_cover_photo !== null &&
@@ -154,21 +162,21 @@ const BookDetail = () => {
                     <i>By &nbsp;</i>
                     <b>{`${book.author.author_name}`}</b>
                   </p>
-                </div>
-                <div className="col-sm-9 col-md-9 col-lg-9">
+                </Col>
+                <Col sm={9} md={9} lg={9}>
                   <h3>
                     <b>{book.book_title}</b>
                   </h3>
                   <p>{book.book_summary}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="card mb-4">
-            <div className="card-header">
+                </Col>
+              </Row>
+            </Card.Body>
+          </Card>
+          <Card className="mb-4">
+            <Card.Header>
               <h4>Customer reviews (filter by {currentStar} star)</h4>
-            </div>
-            <div className="card-body">
+            </Card.Header>
+            <Card.Body>
               <h4>
                 <b>{book.avg_star}&nbsp;Star</b>
               </h4>
@@ -275,12 +283,12 @@ const BookDetail = () => {
                   ></MyPagination>
                 </>
               )}
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-4 col-md-4 col-lg-4">
-          <div className="card mb-4">
-            <div className="card-header">
+            </Card.Body>
+          </Card>
+        </Col>
+        <Col sm={4} md={4} lg={4}>
+          <Card className="mb-4">
+            <Card.Header>
               <h3>
                 {book.book_price !== book.final_price ? (
                   <strike>{formatCurrency(book.book_price)}</strike>
@@ -289,23 +297,23 @@ const BookDetail = () => {
                   <strong>{formatCurrency(book.final_price)}</strong>
                 </span>
               </h3>
-            </div>
-            <div className="card-body">
+            </Card.Header>
+            <Card.Body>
               <form className="add-cart">
                 <p>Quantity</p>
                 <span className="number">
-                  <a className="btn" onClick={decreaseBuyQuantity}>
+                  <Button onClick={decreaseBuyQuantity}>
                     <FontAwesomeIcon icon={faMinus} />
-                  </a>
+                  </Button>
                   <input
                     id="buy-quantity"
                     type="text"
                     name="buy-quantity"
                     value={buyQuantity}
                   />
-                  <a className="btn" onClick={increaseBuyQuantity}>
+                  <Button onClick={increaseBuyQuantity}>
                     <FontAwesomeIcon icon={faPlus} />
-                  </a>
+                  </Button>
                 </span>
                 <Button
                   variant="secondary"
@@ -327,13 +335,13 @@ const BookDetail = () => {
                 show={addCartFailed}
                 setShow={setAddCartFailed}
               />
-            </div>
-          </div>
-          <div className="card mb-4">
-            <div className="card-header">
+            </Card.Body>
+          </Card>
+          <Card className="mb-4">
+            <Card.Header>
               <h4>Write a review</h4>
-            </div>
-            <div className="card-body">
+            </Card.Header>
+            <Card.Body>
               <Form onSubmit={handleReviewFormSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Add a title</Form.Label>
@@ -376,10 +384,10 @@ const BookDetail = () => {
                   Submit Review
                 </Button>
               </Form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   )
 }

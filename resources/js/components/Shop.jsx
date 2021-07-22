@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from 'react'
-import { Container, Dropdown } from 'react-bootstrap'
+import { Container, Dropdown, Row, Col, Accordion } from 'react-bootstrap'
 import BookCards from './utils/BookCards'
 import CheckBoxCard from './utils/CheckBoxCard'
 import MyPagination from './utils/MyPagination'
@@ -106,12 +106,12 @@ const Shop = () => {
     <Container>
       <h2>Books</h2>
       <hr />
-      <div className="row shop mt-5">
+      <Row className="mt-5">
         <div className="filter col-sm-2 col-md-2 col-lg-2">
           <p>
             <strong>Filter by</strong>
           </p>
-          <div className="accordion" id="bookFilterAccordion">
+          <Accordion id="bookFilterAccordion">
             <CheckBoxCard
               title="Categories"
               items={categories}
@@ -142,9 +142,9 @@ const Shop = () => {
                 setShouldComponentUpdate(true)
               }}
             />
-          </div>
+          </Accordion>
         </div>
-        <div className="col-sm-10 col-md-10 col-lg-10">
+        <Col sm={10} md={10} lg={10}>
           <div className="d-flex justify-content-between mb-4">
             <p>
               Showing {books.meta.from}-{books.meta.to} of {books.meta.total}{' '}
@@ -193,7 +193,9 @@ const Shop = () => {
               </Dropdown>
             </div>
           </div>
-          <div className="row">{mapBooks()}</div>
+          <div className="book-item">
+            <Row>{mapBooks()}</Row>
+          </div>
           <MyPagination
             totPages={books.meta.last_page}
             currentPage={currentPage}
@@ -202,8 +204,8 @@ const Shop = () => {
               setShouldComponentUpdate(true)
             }}
           ></MyPagination>
-        </div>
-      </div>
+        </Col>
+      </Row>
     </Container>
   )
 }

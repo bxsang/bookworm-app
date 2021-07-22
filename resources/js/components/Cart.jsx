@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
 import { useHistory, Link } from 'react-router-dom'
-import { Container, Table, Button } from 'react-bootstrap'
+import { Container, Table, Button, Card, Row, Col } from 'react-bootstrap'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -73,8 +73,8 @@ const Cart = (props) => {
     <Container>
       <h4>Your cart: {Object.keys(props.cartItems).length} items</h4>
       <hr />
-      <div className="row">
-        <div className="col-sm-8 col-md-8 col-lg-8">
+      <Row>
+        <Col sm={8} md={8} lg={8}>
           <Table hover id="table-cart" style={{ border: '#999 solid 1px' }}>
             <thead>
               <tr>
@@ -161,13 +161,13 @@ const Cart = (props) => {
               })}
             </tbody>
           </Table>
-        </div>
-        <div className="col-sm-4 col-md-4 col-lg-4">
-          <div className="card mb-4">
-            <div className="card-header d-flex justify-content-center">
+        </Col>
+        <Col sm={4} md={4} lg={4}>
+          <Card className="mb-4">
+            <Card.Header className="d-flex justify-content-center">
               <strong>Cart Totals</strong>
-            </div>
-            <div className="card-body">
+            </Card.Header>
+            <Card.Body>
               <h2 className="d-flex justify-content-center">
                 <strong>{formatCurrency(cartTotals)}</strong>
               </h2>
@@ -191,10 +191,10 @@ const Cart = (props) => {
                 show={orderFailed}
                 setShow={setOrderFailed}
               />
-            </div>
-          </div>
-        </div>
-      </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </Container>
   )
 }
