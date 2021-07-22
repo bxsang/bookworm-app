@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import MyPagination from './utils/MyPagination'
+import AlertDismissible from './utils/AlertDismissible'
 import BooksService from '../services/books'
 import ReviewService from '../services/review'
 import { addToCart } from '../actions/cart'
@@ -29,6 +30,8 @@ const BookDetail = () => {
   const [reviewDetail, setReviewDetail] = useState('')
   const [reviewStar, setReviewStar] = useState('1')
   const [shouldUpdateReviews, setShouldUpdateReviews] = useState(false)
+  const [addCartSuccess, setAddCartSuccess] = useState(false)
+  const [addCartFailed, setAddCartFailed] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -81,8 +84,13 @@ const BookDetail = () => {
       final_price: book.final_price,
       book_cover_photo: book.book_cover_photo,
     }
-    dispatch(addToCart(item))
-    console.log('add book to cart')
+    try {
+      dispatch(addToCart(item))
+      setAddCartSuccess(true)
+    } catch (error) {
+      console.log(error)
+      setAddCartFailed(true)
+    }
   }
 
   const handleReviewTitleChange = (event) => {
@@ -307,6 +315,18 @@ const BookDetail = () => {
                   Add to cart
                 </Button>
               </form>
+              <AlertDismissible
+                variant="primary"
+                message="Add book to cart success!!"
+                show={addCartSuccess}
+                setShow={setAddCartSuccess}
+              />
+              <AlertDismissible
+                variant="danger"
+                message="Add book to cart failed!!"
+                show={addCartFailed}
+                setShow={setAddCartFailed}
+              />
             </div>
           </div>
           <div className="card mb-4">

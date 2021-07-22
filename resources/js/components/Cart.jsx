@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import { Container, Table, Button } from 'react-bootstrap'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,9 +12,13 @@ import {
 } from '../actions/cart'
 import OrderService from '../services/orders'
 import { formatCurrency } from '../helpers/currency-formatter'
+import AlertDismissible from './utils/AlertDismissible'
 
 const Cart = (props) => {
+  const history = useHistory()
   const dispatch = useDispatch()
+  const [orderSuccess, setOrderSuccess] = useState(false)
+  const [orderFailed, setOrderFailed] = useState(false)
 
   let cartTotals = 0.0
 
@@ -48,12 +53,20 @@ const Cart = (props) => {
       .then((response) => {
         if (response.success) {
           dispatch(clearCart())
-          alert('Order success!!')
+          setOrderSuccess(true)
+          setTimeout(() => {
+            history.push('/')
+          }, 10000)
         } else {
-          alert('Order failed')
+          setOrderFailed(true)
+          dispatch(clearCart())
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        setOrderFailed(true)
+        dispatch(clearCart())
+      })
   }
 
   return (
@@ -164,6 +177,18 @@ const Cart = (props) => {
               >
                 Place order
               </Button>
+              <AlertDismissible
+                variant="primary"
+                message="Order success!! Redirecting to home page in 10 seconds..."
+                show={orderSuccess}
+                setShow={setOrderSuccess}
+              />
+              <AlertDismissible
+                variant="danger"
+                message="Order failed!!"
+                show={orderFailed}
+                setShow={setOrderFailed}
+              />
             </div>
           </div>
         </div>
