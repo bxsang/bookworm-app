@@ -47,7 +47,7 @@ const MyPagination = (props) => {
       }
     }
     setPageArray(pageArr)
-  }, [])
+  }, [props.totPages])
 
   return (
     <Pagination style={{ justifyContent: 'center' }}>
