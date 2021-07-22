@@ -9,6 +9,11 @@ import { logout } from '../actions/auth'
 const NavBar = (props) => {
   const dispatch = useDispatch()
   const location = useLocation()
+  let sumCart = 0
+
+  for (const ele in props.cartItems) {
+    sumCart += props.cartItems[ele].quantity
+  }
 
   return (
     <Navbar bg="light" expand="lg">
@@ -53,18 +58,10 @@ const NavBar = (props) => {
           <Nav.Link as={Link} to="/cart">
             {location.pathname === '/cart' ? (
               <b>
-                <u>
-                  {props.cartItems
-                    ? `Cart (${Object.keys(props.cartItems).length})`
-                    : `Cart (0)`}
-                </u>
+                <u>{`Cart (${sumCart})`}</u>
               </b>
             ) : (
-              <>
-                {props.cartItems
-                  ? `Cart (${Object.keys(props.cartItems).length})`
-                  : `Cart (0)`}
-              </>
+              <>{`Cart (${sumCart})`}</>
             )}
           </Nav.Link>
           {props.user ? (
