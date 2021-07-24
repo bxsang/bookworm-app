@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
 use App\Models\Book;
 use App\Models\Order;
-use App\Models\OrderItem;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -34,43 +32,60 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\OrderRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(OrderRequest $request)
+    public function store(Request $request)
     {
-        $validated_request = $request->validated();
+        // $validated_request = $request->validated();
         $order_items = [];
         $order_amount = 0;
-        foreach ($validated_request['books'] as $key => $value) {
-            if ($value['quantity'] < 1 || $value['quantity'] > 8) {
-                return response(['success' => false, 'message' => 'Invalid order qantity']);
+        $unavailable_books = [];
+
+        foreach ($request->all() as $orders => $order) {
+            if ($order['quantity'] < 1 || $order['quantity'] > 8) {
+                array_push($unavailable_books, $order['book_id']);
             }
-            $book = Book::where('id', $value['book_id'])
+
+            $book = Book::where('id', $order['book_id'])
                         ->selectFinalPrice()
                         ->first();
-            $price = $value['quantity'] * $book->final_price;
-            $order_amount += $price;
-            $value['price'] = $price;
-            array_push($order_items, $value);
+
+            if (is_null($book)) {
+                array_push($unavailable_books, $order['book_id']);
+            } else {
+                $price = $order['quantity'] * $book->final_price;
+                $order_amount += $price;
+
+                array_push($order_items, [
+                    'book_id' => $order['book_id'],
+                    'quantity' => $order['quantity'],
+                    'price' => $price
+                ]);
+            }
         }
+
+        if (!empty($unavailable_books)) {
+            return response([
+                'success' => false,
+                'messase' => 'There are unavailable book(s)',
+                'unavailable_books' => $unavailable_books
+            ]);
+        }
+
         try {
             $order = Order::create([
-                'user_id' => $validated_request['user_id'],
+                'user_id' => 1,
                 'order_date' => now(),
                 'order_amount' => $order_amount
             ]);
 
-            foreach ($order_items as $key => $value) {
-                $order_item = OrderItem::create([
-                    'order_id' => $order->id,
-                    'book_id' => $value['book_id'],
-                    'quantity' => $value['quantity'],
-                    'price' => $value['price']
-                ]);
-            }
+            $order->orderItems()->createMany($order_items);
         } catch (\Throwable $th) {
-            return response(['success' => false]);
+            return response([
+                'success' => false,
+                'message' => $th->getMessage()
+            ]);
         }
 
         return response(['success' => true]);

@@ -45,9 +45,9 @@ const Cart = (props) => {
   }
 
   const handlePlaceOrder = () => {
-    const booksToOrder = { user_id: 1, books: [] }
+    const booksToOrder = []
     for (const book in props.cartItems) {
-      booksToOrder.books.push({
+      booksToOrder.push({
         book_id: book,
         quantity: props.cartItems[book].quantity,
       })
@@ -61,6 +61,11 @@ const Cart = (props) => {
           setTimeout(() => {
             history.push('/')
           }, 10000)
+        } else if (response.unavailable_books) {
+          response.unavailable_books.forEach((bookId) => {
+            dispatch(deleteItem(bookId))
+          })
+          setOrderFailed(true)
         } else {
           setOrderFailed(true)
           dispatch(clearCart())
