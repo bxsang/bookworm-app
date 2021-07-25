@@ -31,7 +31,7 @@ const BookDetail = () => {
   }
   const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('date_desc')
-  const [currentPerPage, setCurrentPerPage] = useState(10)
+  const [currentPerPage, setCurrentPerPage] = useState(5)
   const [currentStar, setCurrentStar] = useState('all')
   const [currentPage, setCurrentPage] = useState(1)
   const [reviewTitle, setReviewTitle] = useState('')

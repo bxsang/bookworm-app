@@ -21,7 +21,7 @@ const Shop = () => {
   }
   const perPageList = [5, 10, 15, 20, 25]
   const [currentSort, setCurrentSort] = useState('on-sale')
-  const [currentPerPage, setCurrentPerPage] = useState(10)
+  const [currentPerPage, setCurrentPerPage] = useState(5)
   const [checkedCategories, setCheckedCategories] = useState({})
   const [checkedAuthors, setCheckedAuthors] = useState({})
   const [checkedStars, setCheckedStars] = useState({
