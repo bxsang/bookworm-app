@@ -28,57 +28,39 @@ const NavBar = (props) => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse>
         <Nav className="ml-auto">
-          <Nav.Link as={Link} to="/">
-            {location.pathname === '/' ? (
-              <b>
-                <u>Home</u>
-              </b>
-            ) : (
-              `Home`
-            )}
+          <Nav.Link as={Link} to="/" active={location.pathname === '/'}>
+            Home
           </Nav.Link>
-          <Nav.Link as={Link} to="/shop">
-            {location.pathname === '/shop' ? (
-              <b>
-                <u>Shop</u>
-              </b>
-            ) : (
-              `Shop`
-            )}
+          <Nav.Link as={Link} to="/shop" active={location.pathname === '/shop'}>
+            Shop
           </Nav.Link>
-          <Nav.Link as={Link} to="/about">
-            {location.pathname === '/about' ? (
-              <b>
-                <u>About</u>
-              </b>
-            ) : (
-              `About`
-            )}
+          <Nav.Link
+            as={Link}
+            to="/about"
+            active={location.pathname === '/about'}
+          >
+            About
           </Nav.Link>
-          <Nav.Link as={Link} to="/cart">
-            {location.pathname === '/cart' ? (
-              <b>
-                <u>{`Cart (${sumCart})`}</u>
-              </b>
-            ) : (
-              <>{`Cart (${sumCart})`}</>
-            )}
+          <Nav.Link as={Link} to="/cart" active={location.pathname === '/cart'}>
+            {`Cart (${sumCart})`}
           </Nav.Link>
           {/* {props.user ? (
             <>
-              <Nav.Link as={Link} to="/profile">
-                {location.pathname === '/profile' ? (
-                  <b>
-                    <u>Profile</u>
-                  </b>
-                ) : (
-                  `Profile`
-                )}
+              <Nav.Link
+                as={Link}
+                to="/profile"
+                active={location.pathname === '/profile'}
+              >
+                Profile
               </Nav.Link>
               <Nav.Link onClick={() => dispatch(logout())}>Logout</Nav.Link>
             </>
           ) : (
-            <Nav.Link as={Link} to="/login">
+            <Nav.Link
+              as={Link}
+              to="/login"
+              active={location.pathname === '/login'}
+            >
               Login
             </Nav.Link>
           )} */}
