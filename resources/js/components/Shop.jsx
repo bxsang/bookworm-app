@@ -12,7 +12,7 @@ const Shop = () => {
   const [books, setBooks] = useState(undefined)
   const [categories, setCategories] = useState(undefined)
   const [authors, setAuthors] = useState(undefined)
-  const ratingStars = [1, 2, 3, 4, 5]
+  const ratingStars = [1, 2, 3, 4, 5, 'all']
   const sortBy = {
     'on-sale': 'On sale',
     popularity: 'Popularity',
@@ -30,6 +30,7 @@ const Shop = () => {
     3: true,
     4: true,
     5: true,
+    all: true,
   })
   const [currentPage, setCurrentPage] = useState(1)
   const [shouldComponentUpdate, setShouldComponentUpdate] = useState(false)

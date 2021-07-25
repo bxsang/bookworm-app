@@ -150,10 +150,13 @@ class BookController extends Controller
         })
             ->whereHas('author', function($query) use($authors) {
                 $query->whereIn('author_id', $authors);
-            })
-            ->whereHas('reviews', function($query) use($rating_stars) {
+            });
+
+        if (!in_array('all', $rating_stars)) {
+            $books = $books->whereHas('reviews', function($query) use($rating_stars) {
                 $query->whereIn('rating_start', $rating_stars);
             });
+        }
 
         return $books;
     }
