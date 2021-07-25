@@ -17,8 +17,9 @@ import AlertDismissible from './utils/AlertDismissible'
 const Cart = (props) => {
   const history = useHistory()
   const dispatch = useDispatch()
-  const [orderSuccess, setOrderSuccess] = useState(false)
-  const [orderFailed, setOrderFailed] = useState(false)
+  const [alertVariant, setAlertVariant] = useState('primary')
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
   let cartTotals = 0.0
   let sumCart = 0
@@ -57,7 +58,10 @@ const Cart = (props) => {
       .then((response) => {
         if (response.success) {
           dispatch(clearCart())
-          setOrderSuccess(true)
+          doShowAlert(
+            'Order success!! Redirecting to home page in 10 seconds...',
+            true
+          )
           setTimeout(() => {
             history.push('/')
           }, 10000)
@@ -65,17 +69,26 @@ const Cart = (props) => {
           response.unavailable_books.forEach((bookId) => {
             dispatch(deleteItem(bookId))
           })
-          setOrderFailed(true)
+          doShowAlert(
+            `Order failed!!! These books: ${response.unavailable_books.join()} are not available and will be removed from the cart.`,
+            false
+          )
         } else {
-          setOrderFailed(true)
           dispatch(clearCart())
+          doShowAlert('Order failed!!!', false)
         }
       })
       .catch((error) => {
         console.log(error)
-        setOrderFailed(true)
-        dispatch(clearCart())
+        // dispatch(clearCart())
+        doShowAlert('Order failed!!!', false)
       })
+  }
+
+  const doShowAlert = (message, isSuccess) => {
+    setAlertVariant(`${isSuccess ? 'primary' : 'danger'}`)
+    setAlertMessage(message)
+    setShowAlert(true)
   }
 
   return (
@@ -191,16 +204,10 @@ const Cart = (props) => {
                 Place order
               </Button>
               <AlertDismissible
-                variant="primary"
-                message="Order success!! Redirecting to home page in 10 seconds..."
-                show={orderSuccess}
-                setShow={setOrderSuccess}
-              />
-              <AlertDismissible
-                variant="danger"
-                message="Order failed!!"
-                show={orderFailed}
-                setShow={setOrderFailed}
+                variant={alertVariant}
+                message={alertMessage}
+                show={showAlert}
+                setShow={setShowAlert}
               />
             </Card.Body>
           </Card>
