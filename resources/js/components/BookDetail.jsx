@@ -75,7 +75,8 @@ const BookDetail = () => {
       id,
       currentSort,
       currentPerPage,
-      currentStar
+      currentStar,
+      currentPage
     ).then((response) => {
       setReviews(response)
     })

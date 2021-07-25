@@ -51,8 +51,8 @@ class BookService {
     }
   }
 
-  async getBookReviews(id, sortBy, perPage, star) {
-    const endpoint = `/books/${id}/reviews?sort_by=${sortBy}&per_page=${perPage}&star=${star}`
+  async getBookReviews(id, sortBy, perPage, star, page) {
+    const endpoint = `/books/${id}/reviews?sort_by=${sortBy}&per_page=${perPage}&star=${star}&page=${page}`
     const response = await Repository.get(endpoint)
     if (response) {
       return response
