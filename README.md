@@ -14,6 +14,14 @@ docker-compose up -d
 ```sh
 docker exec -it bookworm_app sh
 ```
+* Install php dependencies
+```sh
+composer install
+```
+* Fix permissions
+```sh
+chmod -R 777 storage bootstrap/cache
+```
 * Generate new application key
 ```sh
 php artisan key:generate
@@ -26,6 +34,10 @@ php artisan db:seed
 * Create Laravel Passport encryption keys
 ```sh
 php artisan passport:install
+```
+* Install NPM dependencies
+```sh
+npm install
 ```
 * Compile React assets (public assets not included in this repo)
 ```sh
