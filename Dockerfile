@@ -10,4 +10,4 @@ RUN set -ex \
 RUN curl -sS https://getcomposer.org/installer | php -- \
     --install-dir=/usr/local/bin --filename=composer
 
-RUN mkdir /.npm && chown -R 1000:1000 /.npm
+RUN mkdir /root/.npm && chown -R 1000:1000 /root/.npm

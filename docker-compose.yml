@@ -28,7 +28,6 @@ services:
   app:
     build: .
     container_name: bookworm_app
-    user: '${UID:-1000}:${GID:-1000}'
     volumes:
       - './:/app'
     depends_on:
