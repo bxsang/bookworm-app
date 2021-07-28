@@ -6,6 +6,7 @@ All you need is:
 
 ## Usage
 * Make a copy of the file `.env.example` and rename it to `.env`
+* Edit MIX_API_URL in .env corresponding to your environment
 * Run the app with docker-compose
 ```sh
 docker-compose up -d
